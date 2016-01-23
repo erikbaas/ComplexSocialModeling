@@ -1,0 +1,10 @@
+1. A simple graph has unweighted, undirected edges, no loops, and 0 or 1 edges per two nodes.
+2. A regular graph is a simple graph where each node has the same amount of edges, or equal valency.
+   A complete graph is a simple graph where each unique pair of nodes has an edge.
+   If there are n nodes, then each node will have n-1 edges, which means that each node has an equal amount of edges.
+   Thus, it is also a regular graph.
+3. A path is a in/finite series of edges connecting a sequence of nodes.
+   A cycle is a path who's first and last nodes are the same, and which never contains the same node twice.
+4. A tree is an undirected graph where any two nodes are connected by one path.
+    -N nodes, N-1 edges
+   A forest is a group of unconnected trees.
