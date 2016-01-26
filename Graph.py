@@ -66,6 +66,23 @@ class Graph(dict):
                 if v != w:
                     self.add_edge(Edge(v, w))
 
+    def add_regular_edges(n):
+        ''' Turns an edgeless graph into a degree (n) regular graph'''
+
+        vs = self.vertices()
+        v_num = len(vs)
+
+        if n == v_num - 1:
+            self.add_all_edges
+
+        elif n > v_num - 1:
+            print 'Not enough vertices'
+
+        else:
+            for v in vs:
+                self.add_edge(Edge(v, w))
+
+
 class Vertex(object):
     def __init__(self, label=''):
         self.label = label

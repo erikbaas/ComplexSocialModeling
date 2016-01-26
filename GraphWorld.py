@@ -51,7 +51,7 @@ class GraphCanvas(GuiCanvas):
 
 class GraphWorld(Gui):
     """GraphWorld is a Gui that has a Graph Canvas and control buttons."""
-    
+
     def __init__(self):
         Gui.__init__(self)
         self.title('GraphWorld')
@@ -69,7 +69,7 @@ class GraphWorld(Gui):
         self.canvas = self.widget(GraphCanvas, scale=[xscale, yscale],
                               width=self.ca_width, height=self.ca_height,
                               bg='white')
-        
+
         # buttons
         self.row()
         self.bu(text='Clear', command=self.clear)
@@ -84,7 +84,7 @@ class GraphWorld(Gui):
         # copy the positions from the layout into the Vertex objects
         for v in g.vertices():
             v.pos = layout.pos(v)
-        
+
         # draw the edges and store the tags in self.etags, which maps
         # from Edges to their tags
         c = self.canvas
