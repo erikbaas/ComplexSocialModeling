@@ -17,7 +17,7 @@ class Graph(dict):
 
         v, w = e
         self[v][w] = e
-        self[w][v] = e
+        self[w][v] = e.reverse()
 
     def get_edge(self, v0, v1):
         ''' Return the edge between (v0) and (v1) if it exists'''
@@ -89,6 +89,9 @@ class Edge(tuple):
         return 'Edge(%s, %s)' % (repr(self[0]), repr(self[1]))
 
     __str__ = __repr__
+
+    def reverse(self):
+        return Edge(self[1], self[0])
 
 
 if __name__=='__main__':

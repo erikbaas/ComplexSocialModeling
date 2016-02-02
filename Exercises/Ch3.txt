@@ -1,0 +1,14 @@
+Exercise 3.1
+1. Order of growth is determined by largest degree term (independently of coefficients), so O(n^3) in all cases
+2. Multiplying out gives a leading term of O(n^3)
+3. O(g) because g has the same degree leading term as f
+4. O(g) is the order of whichever function has largest leading term, but both are in g, so O(g)
+5. The greater of O(g) and O(h)
+6. The product of the leading terms of f1 and f2, so O(g*h)
+
+Exercise 3.2
+1. Comparison sort uses a single method to determine order, and relies on the transitive property to order multiple items. Best worst case order of growth for a comparison sort is O(n*log(n)). The best worst case order of growth for any sort is O(n*c + d)
+2. O(n^2). It's inefficient because at it's worst it needs to traverse the list of n items n-1 times
+3. O(w*n). It requires elements that are integers, or which can be represented as integers, in order to be able to use radix sort
+
+
