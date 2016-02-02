@@ -1,11 +1,10 @@
 class Graph(dict):
     def __init__(self, vs=[], es=[]):
         ''' Create a new graph. (vs) is a list of vertices; (es) is a list of edges'''
-        for v in vs:
-            self.add_vertex(v)
 
-        for e in es:
-            self.add_edge(e)
+        [self.add_vertex(v) for v in vs]
+
+        [self.add_edge(e) for e in es]
 
     def add_vertex(self, v):
         ''' Add (v) to the graph'''
@@ -31,10 +30,12 @@ class Graph(dict):
     def remove_edge(self, e):
         ''' Remove all references to (e) if it exists'''
 
-        for v in self.keys():
-            for w in self[v].keys():
-                if self[v][w] is e:
-                    del self[v][w]
+        # for v in self.keys():
+        #     for w in self[v].keys():
+        #         if self[v][w] is e:
+        #             del self[v][w]
+
+        [self[v].pop(w) for v in self.keys() for w in self[v].keys() if (self[v][w] is e)]
 
     def vertices(self):
         ''' Returns a list of vertices in graph'''
@@ -42,12 +43,7 @@ class Graph(dict):
 
     def edges(self):
         ''' Returns a list of edges in the graph'''
-
-        edge_list = []
-        for v in self.vertices():
-            edge_list += self[v].values()
-
-        return edge_list
+        return [val for v in self.vertices() for val in self[v].values()]
 
     def out_vertices(self, v):
         ''' Returns a list of adjacent vertices to (v)'''
@@ -60,17 +56,12 @@ class Graph(dict):
     def add_all_edges(self):
         ''' Turns an edgeless Graph into a complete graph'''
 
-        vs = self.vertices()
-        for v in vs:
-            for w in vs:
-                if v != w:
-                    self.add_edge(Edge(v, w))
+        [self.add_edge(Edge(v,w)) for v in self.vertices() for w in self.vertices() if v!=w]
 
     def add_regular_edges(n):
         ''' Turns an edgeless graph into a degree (n) regular graph'''
 
-        vs = self.vertices()
-        v_num = len(vs)
+        v_num = len(self.vertices())
 
         if n == v_num - 1:
             self.add_all_edges
@@ -79,8 +70,7 @@ class Graph(dict):
             print 'Not enough vertices'
 
         else:
-            for v in vs:
-                self.add_edge(Edge(v, w))
+            [self.add_edge(Edge(v,w)) for v in self.vertices()]
 
 
 class Vertex(object):
@@ -109,12 +99,12 @@ if __name__=='__main__':
     f = Edge(v, x)
     g = Graph([v, w, x], [e, f])
 
-    #Test get_edge
+    # Test get_edge
     print '----Graph.get_edge Test----'
     print g.get_edge(x, w)
     print g.get_edge(v, w)
 
-    #Test remove_edge
+    # Test remove_edge
     print '\r ----Graph.remove_edge Test----'
     g.remove_edge(e)
     print g
