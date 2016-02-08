@@ -17,7 +17,7 @@ class Graph(dict):
 
         v, w = e
         self[v][w] = e
-        self[w][v] = e.reverse()
+        self[w][v] = e
 
     def get_edge(self, v0, v1):
         ''' Return the edge between (v0) and (v1) if it exists'''
@@ -26,6 +26,8 @@ class Graph(dict):
             return self[v0][v1]
         except:
             return None
+
+    has_edge = get_edge
 
     def remove_edge(self, e):
         ''' Remove all references to (e) if it exists'''
@@ -43,7 +45,10 @@ class Graph(dict):
 
     def edges(self):
         ''' Returns a list of edges in the graph'''
-        return [val for v in self.vertices() for val in self[v].values()]
+        s = set()
+        for d in self.itervalues():
+            s.update(d.itervalues())
+        return list(s)
 
     def out_vertices(self, v):
         ''' Returns a list of adjacent vertices to (v)'''
@@ -58,26 +63,79 @@ class Graph(dict):
 
         [self.add_edge(Edge(v,w)) for v in self.vertices() for w in self.vertices() if v!=w]
 
-    def add_regular_edges(n):
+    def add_regular_edges(self, n):
         ''' Turns an edgeless graph into a degree (n) regular graph'''
 
-        v_num = len(self.vertices())
+        vs = self.vertices()
 
-        if n == v_num - 1:
+        if n >= len(vs):
+            raise ValueError, ('Not enough vertices in graph')
+
+        if n == len(vs) - 1:
             self.add_all_edges
 
-        elif n > v_num - 1:
-            print 'Not enough vertices'
-
+        if n%2 != 0:
+            if len(vs)%2 != 0:
+                raise ValueError, ('Cannot create this graph')
+            self.add_regular_edges_even(n-1)
+            self.add_regular_edges_odd()
         else:
-            [self.add_edge(Edge(v,w)) for v in self.vertices()]
+            self.add_regular_edges_even(n)
+
+    def add_regular_edges_even(self, k):
+        ''' Make a regular graph if the degree is even '''
+
+        vs = self.vertices()
+        double = vs*2
+
+        for i, v in enumerate(vs):
+            for j in range(1, k/2 +1):
+                w = double[i+j]
+                self.add_edge(Edge(v,w))
+
+    def add_regular_edges_odd(self):
+        ''' Add extra 'crossing' edge for a graph with odd degree '''
+
+        vs = self.vertices()
+        double = vs*2
+
+        for i in range(len(vs)/2):
+            v = double[i]
+            w = double[i + len(vs)/2]
+            self.add_edge(Edge(v,w))
+
+
+    def is_connected(self):
+        ''' Returns True if the graph is connected, False otherwise'''
+
+        queue = [self.keys()[0]]
+        marked = [self.keys()[0]]
+
+        while len(queue) > 0:
+            v = queue.pop(0)
+            for w in self.out_vertices(v):
+                if w not in marked:
+                    queue.append(w)
+                    marked.append(w)
+
+
+        if len(marked) == len(self.keys()):
+            return True
+        else:
+            return False
+
+
 
 
 class Vertex(object):
     def __init__(self, label=''):
         self.label = label
+        self.mark = False
     def __repr__(self):
         return 'Vertex(%s)' % repr(self.label)
+
+    def mark(self):
+        self.mark = True
 
     __str__ = __repr__
 
@@ -89,53 +147,3 @@ class Edge(tuple):
         return 'Edge(%s, %s)' % (repr(self[0]), repr(self[1]))
 
     __str__ = __repr__
-
-    def reverse(self):
-        return Edge(self[1], self[0])
-
-
-if __name__=='__main__':
-    v = Vertex('v')
-    w = Vertex('w')
-    x = Vertex('x')
-    e = Edge(v, w)
-    f = Edge(v, x)
-    g = Graph([v, w, x], [e, f])
-
-    # Test get_edge
-    print '----Graph.get_edge Test----'
-    print g.get_edge(x, w)
-    print g.get_edge(v, w)
-
-    # Test remove_edge
-    print '\r ----Graph.remove_edge Test----'
-    g.remove_edge(e)
-    print g
-
-    #Test vertices
-    print '\r ----Graph.vertices Test----'
-    print g.vertices()
-
-    #Test edges
-    print '\r ----Graph.edges Test----'
-    print g.edges()
-
-    #Test out_vertices
-    print '\r ----Graph.out_vertices Test----'
-    g.add_edge(e)
-    print g.out_vertices(v)
-    g.remove_edge(f)
-    print g.out_vertices(v)
-
-    #Test out_edges
-    print '\r ----Graph.out_edges Test----'
-    g.add_edge(f)
-    print g.out_edges(v)
-    g.remove_edge(f)
-    print g.out_edges(v)
-
-    #Test add_all_edges
-    g.remove_edge(e)
-    g.remove_edge(f)
-    g.add_all_edges()
-    print g.edges()
