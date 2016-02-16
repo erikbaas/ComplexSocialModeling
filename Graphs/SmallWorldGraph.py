@@ -15,7 +15,7 @@ class SmallWorldGraph(Graph):
         self.rewire(p)
         self.assign_edge_lengths()
         self.clust = self.clustering_coefficient()
-        self.length = self.char_length()
+        self.length = self.average_length()
 
     def assign_edge_lengths(self):
         """Gives each edge a length attribute."""

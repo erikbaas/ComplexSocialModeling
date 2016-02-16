@@ -59,12 +59,12 @@ def connect_vs_p(n, trials):
     return xs, ys
 
 def Cp_over_C0():
-    vs = [Vertex('v'+str(i)) for i in xrange(1000)]
+    vs = [Vertex('v'+str(i)) for i in xrange(500)]
     clust_list = []
     xs = [x/100.0 for x in xrange(101)]
     g = []
     for p in xs:
-        g.append([SmallWorldGraph(vs, 10, p) for el in xrange(20)])
+        g.append([SmallWorldGraph(vs, 5, p) for el in xrange(20)])
         print p
 
     print 'Created graphs'
