@@ -8,7 +8,7 @@ from Graph import Graph, Edge, Vertex
 from GraphWorld import GraphWorld
 from RandomGraph import RandomGraph
 
-class SmallWorldGraph(Graph):
+class SmallWorldGraph(RandomGraph):
     def __init__(self, vs, k, p):
         Graph.__init__(self, vs, [])
         self.add_regular_edges(k)
@@ -52,18 +52,26 @@ class SmallWorldGraph(Graph):
         return avg(C)
 
     def shortest_path(self, vert):
-        L = {v:float('Inf') for v in self.vertices()}
-        L[vert] = 0
+        L = {v:0 for v in self.vertices()}
+        L[vert] = 0.0001
         queue = [vert]
         i = 1
+
+
         while queue:
             v = queue.pop(0)
             for w in self.out_vertices(v):
-                if i < L[w]:
+                if i < L[w] or L[w] == 0:
                     queue.append(w)
                     L[w] = i
 
             i += 1
+        #Bullshitty solution to unconnected graph problem
+
+        # for key, val in L.iteritems():
+        #     if val == Inf:
+        #         queue.append(key)
+
 
         for key, value in L.iteritems():
             key.dist = value
@@ -136,6 +144,7 @@ class SmallWorldGraph(Graph):
         tot_length = []
         for v in vs:
             self.shortest_path(v)
+            #Need a recursive function to check that for unconnected vertices and then add them.
             lengths = [v.dist for v in vs]
             tot_length.append(avg(lengths))
 
@@ -146,7 +155,9 @@ def avg(lst):
 
 Inf = float('Inf')
 
-
+if __name__ == '__main__':
+    g = SmallWorldGraph([Vertex(str(i)) for i in xrange(10)], 3, 0)
+    print g.clust, g.length
 
 
 

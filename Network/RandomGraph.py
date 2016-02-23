@@ -2,6 +2,10 @@ from Graph import Graph, Edge, Vertex
 import random
 
 class RandomGraph(Graph):
+    def __init__(self, vs, p):
+        Graph.__init__(self, vs, [])
+        self.add_random_edges(p)
+
     def add_random_edges(self, p):
         if self.edges() != []:
             print 'This method only takes an edgeless graph'
@@ -20,8 +24,8 @@ if __name__ == '__main__':
     x = Vertex('x')
     y = Vertex('y')
     e = Edge(v, w)
-    rand_graph = RandomGraph([v, w, x, y])
+    rand_graph = RandomGraph([v, w, x, y], .3)
     print rand_graph.edges()
 
-    rand_graph.add_random_edges(.3)
-    print rand_graph.edges()
+    # rand_graph.add_random_edges(.3)
+    # print rand_graph.edges()
