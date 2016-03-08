@@ -1,0 +1,598 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     20291,        589]
+NotebookOptionsPosition[     18909,        536]
+NotebookOutlinePosition[     19246,        551]
+CellTagsIndexPosition[     19203,        548]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mound", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"{", "0", "}"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PadCenter", "[", 
+    RowBox[{"A_List", ",", "max_List"}], "]"}], ":=", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{
+     RowBox[{"PadLeft", "[", 
+      RowBox[{"A", ",", 
+       RowBox[{"Floor", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Dimensions", "[", "A", "]"}], "+", "max"}], ")"}], "/", 
+         "2"}], "]"}]}], "]"}], ",", "max"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"moundstep", "[", 
+    RowBox[{"mound_List", ",", "turmite_List"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"j", "=", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", 
+          RowBox[{"mound", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+       RowBox[{"k", "=", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", 
+          RowBox[{"mound", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+       RowBox[{"x", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ",", 
+       RowBox[{"y", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "2"}], "]"}], "]"}]}], ",", 
+       RowBox[{"state", "=", 
+        RowBox[{
+         RowBox[{"mound", "[", 
+          RowBox[{"[", 
+           RowBox[{"3", ",", "1"}], "]"}], "]"}], "+", "1"}]}], ",", 
+       RowBox[{"direction", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"3", ",", "2"}], "]"}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Max", "[", 
+         RowBox[{"j", ",", "k"}], "]"}], "<", "1000"}], ",", 
+       RowBox[{"(*", " ", 
+        RowBox[{"**", 
+         RowBox[{
+         "*", "Arbitrarily", " ", "maximum", " ", "size", " ", "of", " ", 
+          RowBox[{"diagram", "**"}], "*"}]}], "*)"}], 
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"old", "=", 
+           RowBox[{"Switch", "[", 
+            RowBox[{"direction", ",", "0", ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"x", "\[Equal]", "1"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Prepend", "[", 
+                  RowBox[{
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"Table", "[", 
+                    RowBox[{"0", ",", 
+                    RowBox[{"{", "k", "}"}]}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "-", "1"}], ",", "y"}], "}"}]}], "}"}]}], 
+              "]"}], ",", "1", ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"y", "\[Equal]", "1"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Map", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Prepend", "[", 
+                    RowBox[{"#", ",", "0"}], "]"}], "&"}], ",", 
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "-", "1"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+             "2", ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"x", "\[Equal]", "j"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Append", "[", 
+                  RowBox[{
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"Table", "[", 
+                    RowBox[{"0", ",", 
+                    RowBox[{"{", "k", "}"}]}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "+", "1"}], ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "+", "1"}], ",", "y"}], "}"}]}], "}"}]}], 
+              "]"}], ",", "3", ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"y", "\[Equal]", "k"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Map", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Append", "[", 
+                    RowBox[{"#", ",", "0"}], "]"}], "&"}], ",", 
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "+", "1"}]}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "+", "1"}]}], "}"}]}], "}"}]}], "]"}]}], 
+            "]"}]}], "}"}], ",", 
+         RowBox[{"With", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"newx", "=", 
+              RowBox[{"old", "[", 
+               RowBox[{"[", 
+                RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ",", 
+             RowBox[{"newy", "=", 
+              RowBox[{"old", "[", 
+               RowBox[{"[", 
+                RowBox[{"2", ",", "2"}], "]"}], "]"}]}]}], "}"}], ",", 
+           RowBox[{"With", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"color", "=", 
+               RowBox[{
+                RowBox[{"old", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"1", ",", "newx", ",", "newy"}], "]"}], "]"}], "+", 
+                "1"}]}], "}"}], ",", 
+             RowBox[{"Append", "[", 
+              RowBox[{
+               RowBox[{"ReplacePart", "[", 
+                RowBox[{"old", ",", 
+                 RowBox[{"turmite", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"state", ",", "color", ",", "1"}], "]"}], "]"}], 
+                 ",", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", "newx", ",", "newy"}], "}"}]}], "]"}], 
+               ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"turmite", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"state", ",", "color", ",", "3"}], "]"}], "]"}], 
+                 ",", 
+                 RowBox[{"Mod", "[", 
+                  RowBox[{
+                   RowBox[{"direction", "+", 
+                    RowBox[{"turmite", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"state", ",", "color", ",", "2"}], "]"}], "]"}]}],
+                    ",", "4"}], "]"}]}], "}"}]}], "]"}]}], "]"}]}], "]"}]}], 
+        "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "}"}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.6658547878272038`*^9, 3.665854812640554*^9}, {
+   3.665855173225113*^9, 3.6658551736579313`*^9}, {3.665855388590948*^9, 
+   3.6658553997270823`*^9}, {3.6658561313574038`*^9, 3.66585613714709*^9}, 
+   3.665856505053146*^9}],
+
+Cell[BoxData[
+ RowBox[{"myOnlyTurmites", "=", 
+  RowBox[{"{", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "1", ",", "0"}], "}"}], "}"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.6658551591011*^9, 3.6658551662586203`*^9}, 
+   3.665856496724016*^9, 3.665956463528739*^9, 3.6659577319401617`*^9},
+ EmphasizeSyntaxErrors->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Dimensions", "[", 
+  RowBox[{"mound", "[", 
+   RowBox[{"[", "1", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.665855211886857*^9, 3.665855236890724*^9}, {
+  3.66585529888554*^9, 3.665855298953005*^9}, {3.6658554412959967`*^9, 
+  3.665855456171105*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{{3.665855215311347*^9, 3.665855237134481*^9}, 
+   3.6658552997134733`*^9, {3.665855445135145*^9, 3.665855456496045*^9}, 
+   3.665856549086372*^9, 3.665955494345647*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mound", "[", 
+  RowBox[{"[", 
+   RowBox[{"3", ",", "1"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.665855290616802*^9, 3.665855379785592*^9}, {
+  3.665855481332055*^9, 3.665855512160081*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{{3.665855308773513*^9, 3.66585532471126*^9}, {
+   3.6658553622900476`*^9, 3.665855376316885*^9}, {3.665855484312881*^9, 
+   3.665855512326847*^9}, 3.66585654913162*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"m0", "=", "mound"}]], "Input",
+ CellChangeTimes->{{3.6658559079396048`*^9, 3.6658559116523933`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"{", "0", "}"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.665855912668812*^9, 3.665856549165841*^9, 
+  3.6659554957643957`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"m1", "=", 
+  RowBox[{"moundstep", "[", 
+   RowBox[{"mound", ",", "myOnlyTurmites"}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.371493493517703*^9, {3.371496003161794*^9, 
+   3.3714960247173023`*^9}, {3.3714961224595356`*^9, 
+   3.3714961483584194`*^9}, {3.3714961872017517`*^9, 3.371496188719928*^9}, {
+   3.3714962430146956`*^9, 3.371496244552848*^9}, {3.38445680215625*^9, 
+   3.384456829515625*^9}, {3.38445686715625*^9, 3.38445687621875*^9}, {
+   3.665854831877747*^9, 3.6658549389027023`*^9}, {3.6658551838770323`*^9, 
+   3.665855184762906*^9}, {3.665855743453961*^9, 3.665855783884562*^9}},
+ CellID->1831177820],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "1", "}"}], ",", 
+     RowBox[{"{", "0", "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.665855767984889*^9, 3.6658557868856573`*^9}, 
+   3.665856549220233*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"m2", "=", 
+  RowBox[{"moundstep", "[", 
+   RowBox[{"m1", ",", "myOnlyTurmites"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.665855790467271*^9, 3.665855791918583*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6658557937524843`*^9, 3.6658565492651243`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"m3", "=", 
+  RowBox[{"moundstep", "[", 
+   RowBox[{"m2", ",", "myOnlyTurmites"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.665855798263726*^9, 3.66585580324721*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "3"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.665855798693368*^9, 3.6658558034866323`*^9}, 
+   3.665856549318631*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"m4", "=", 
+  RowBox[{"moundstep", "[", 
+   RowBox[{"m3", ",", "myOnlyTurmites"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.665855807138487*^9, 3.66585580934171*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.66585580969164*^9, 3.665856549363962*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "@", 
+  RowBox[{"First", "@", 
+   RowBox[{"Nest", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"moundstep", "[", 
+       RowBox[{"#", ",", "myOnlyTurmites"}], "]"}], "&"}], ",", "m0", ",", 
+     "1000"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.665855838506689*^9, 3.665855839028357*^9}, {
+  3.665855873626597*^9, 3.665855956214299*^9}, {3.665856042381325*^9, 
+  3.6658561038342133`*^9}, {3.665956447509104*^9, 3.665956459635604*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJxVkNENACEIQ/EmuA8XcKUbwQXc/+9IsVCMRHi2Qlz7fPsxs9djeoxYkWSJ
+ArtB6v2QxBLTVrLiwLihLKwh69Ygomv+HIvi+wBIdae5VJw2NfcCVN7JjkOI
+fo2UP9xBApc=
+   "], {{0, 0}, {20, 16}}, {0, 1}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output",
+ CellChangeTimes->{{3.665855875323223*^9, 3.66585595655385*^9}, {
+   3.665856043208618*^9, 3.6658561052313643`*^9}, 3.66585614218007*^9, 
+   3.665856550560614*^9, 3.665955500679605*^9, {3.6659564485952578`*^9, 
+   3.665956466409849*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{
+     RowBox[{"PadCenter", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"NestWhile", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"moundstep", "[", 
+            RowBox[{"#", ",", "myOnlyTurmites"}], "]"}], "&"}], ",", "mound", 
+          ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", "#", "]"}], ">", "1"}], " ", "&"}], ",", 
+          "1", ",", "n"}], "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"130", ",", "130"}], "}"}]}], "]"}], ",", 
+     RowBox[{"PixelConstrained", "\[Rule]", " ", "True"}], ",", 
+     RowBox[{"Frame", "\[Rule]", " ", "False"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "400"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"n", ",", " ", "0", ",", " ", "1110", ",", " ", "1"}], "}"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.371493493517703*^9, {3.371496003161794*^9, 
+   3.3714960247173023`*^9}, {3.3714961224595356`*^9, 
+   3.3714961483584194`*^9}, {3.3714961872017517`*^9, 3.371496188719928*^9}, {
+   3.3714962430146956`*^9, 3.371496244552848*^9}, {3.38445680215625*^9, 
+   3.384456829515625*^9}, {3.38445686715625*^9, 3.38445687621875*^9}, {
+   3.665854831877747*^9, 3.6658549389027023`*^9}, {3.6658551838770323`*^9, 
+   3.665855184762906*^9}, {3.665956399548086*^9, 3.6659564076803703`*^9}},
+ CellID->127727694],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 286, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`n$$], 0, 1110, 1}}, Typeset`size$$ = {
+    390., {192., 198.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`n$100280$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$100280$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          
+          NestWhile[$CellContext`moundstep[#, $CellContext`myOnlyTurmites]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`n$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{$CellContext`n$$, 0, 1110, 1, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{437., {227., 234.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.665955483402473*^9, {3.665956400064768*^9, 3.665956408044196*^9}, 
+   3.66595646974986*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6659554693141823`*^9, 3.665955470376869*^9}}]
+},
+WindowSize->{1596, 858},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"10.3 for Linux x86 (64-bit) (December 10, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 8380, 222, 319, "Input"],
+Cell[8941, 244, 338, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[9304, 256, 284, 6, 32, "Input"],
+Cell[9591, 264, 261, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9889, 274, 220, 5, 32, "Input"],
+Cell[10112, 281, 216, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10365, 289, 124, 2, 32, "Input"],
+Cell[10492, 293, 321, 10, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10850, 308, 663, 12, 32, "Input",
+ CellID->1831177820],
+Cell[11516, 322, 376, 12, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11929, 339, 190, 4, 32, "Input"],
+Cell[12122, 345, 404, 13, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12563, 363, 189, 4, 32, "Input"],
+Cell[12755, 369, 430, 14, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13222, 388, 189, 4, 32, "Input"],
+Cell[13414, 394, 399, 13, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13850, 412, 475, 11, 32, "Input"],
+Cell[14328, 425, 714, 17, 306, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15079, 447, 1474, 35, 55, "Input",
+ CellID->127727694],
+Cell[16556, 484, 2240, 46, 478, "Output"]
+}, Open  ]],
+Cell[18811, 533, 94, 1, 32, InheritFromParent]
+}
+]
+*)
+
+(* End of internal cache information *)
