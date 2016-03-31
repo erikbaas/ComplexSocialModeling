@@ -14,7 +14,7 @@ class Agent(object):
         self.sugar_reserve = sugar_reserve
         self.sugarscape = sugarscape
         self.location = self.sugarscape.get_location(xloc, yloc)
-        self.location.set_has_agent(True)
+        self.location.set_has_agent(True, self)
 
     def make_vision(self, vision):
         '''generates random vision for agent'''
@@ -51,15 +51,15 @@ class Agent(object):
 
     def walk(self, location):
         '''move to the next spot'''
-        self.location.set_has_agent(False)
+        self.location.set_has_agent(False, None)
         self.location = location
-        self.location.set_has_agent(True)
+        self.location.set_has_agent(True, self)
         return True
 
     def die(self, location):
         '''agent is removed from sugarscape'''
         self.sugarscape.remove_agent(self)
-        self.location.set_has_agent(False)
+        self.location.set_has_agent(False, None)
         return True
 
     def leave_behind(self):

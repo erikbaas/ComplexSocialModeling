@@ -45,7 +45,7 @@ class Gui:
         while True:
             if self.started:
                 scape.nextstep()
-                time.sleep(.03)
+                time.sleep(.1)
                 self.update_graph(self.scape.timestamp)
             self.draw_scape_info()
             for event in pygame.event.get():
@@ -56,7 +56,12 @@ class Gui:
                     healthColor=pygame.Color(0, 0, int(250*(loc.get_sugar_amt()/4.0)))
                     pygame.draw.rect(self.window,healthColor,((self.square_length + self.buffer)*i,(self.square_length + self.buffer)*j,self.square_length,self.square_length))
                     if loc.get_has_agent():
-                        pygame.draw.circle(self.window,self.agent_color,(int((self.square_length+self.buffer)*i)+int((self.square_length + self.buffer)/2.),
+                        wealth = scape.total_wealth
+                        if loc.agent.get_sugar_reserve() > wealth/float(len(scape.agents)):
+                            agent_color = pygame.Color(0,180,0)
+                        else:
+                            agent_color = pygame.Color(180,0,0)
+                        pygame.draw.circle(self.window, agent_color,(int((self.square_length+self.buffer)*i)+int((self.square_length + self.buffer)/2.),
                                                                           int((self.square_length+self.buffer)*j)+int((self.square_length + self.buffer)/2.) ),
                                                                          int(self.square_length/3.14))
             pygame.display.update()

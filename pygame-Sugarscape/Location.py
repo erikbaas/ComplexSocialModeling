@@ -11,6 +11,7 @@ class Location:
         self.max_sugar = max_sugar
         self.sugar_growth_rate = sugar_growth_rate
         self.has_agent = False
+        self.agent = None
         self.is_rich = False
 
     def set_sugar_amt(self, amount):
@@ -18,22 +19,22 @@ class Location:
         if amount > self.max_sugar:
             self.sugar_amt = self.max_sugar
         else:
-            self.sugar_amt = amount 
+            self.sugar_amt = amount
         return True
-    
+
     def set_max_sugar(self, amount):
         '''resets maximum sugar allowed at the Location'''
         self.max_sugar = amount
         return True
-    
+
     def get_max_sugar(self):
         '''returns maximum sugar allowed at the Location'''
         return self.max_sugar
-        
+
     def get_sugar_amt(self):
         '''returns amount of Sugar at the Location'''
         return self.sugar_amt
-        
+
     def set_sugar_growth_rate(self, amount):
         '''resets the sugar growth rate at the Location'''
         self.sugar_growth_rate = amount
@@ -53,13 +54,13 @@ class Location:
              self.sugar_amt = self.max_sugar
         return True
 
-    def set_has_agent(self, has_agent):
+    def set_has_agent(self, has_agent, agent):
         ''' update if the Location has an agent or not'''
         self.has_agent = has_agent
+        self.agent = agent
         return True
 
     def get_has_agent(self):
-        ''' gets if the Location has an agent or not'''
         return self.has_agent
 
     def __str__(self):

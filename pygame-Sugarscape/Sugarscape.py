@@ -66,6 +66,12 @@ class Sugarscape(Matrix):
         self.agents.remove(agent)
         return True
 
+    def get_agent(self, location):
+        '''return agent at given location'''
+
+        self.agent. location.x
+
+
     def get_nearby_locations(self, vision, location):
         ''' returns a list of all location objects within
         a certain range of the object'''
@@ -96,9 +102,9 @@ class Sugarscape(Matrix):
         #     for x in xrange((self.length/3), self.length):
         #         for y in xrange(0,(self.width*2/3)):
         #             self.get_location(x, y).set_sugar_growth_rate(0)
-        #     for x in xrange(0, (self.length/3)):
-        #         for y in xrange((self.width*2/3),self.width):
-        #             self.get_location(x, y).set_sugar_growth_rate(1)
+            # for x in xrange(0, (self.length/3)):
+            #     for y in xrange((self.width*2/3),self.width):
+            #         self.get_location(x, y).set_sugar_growth_rate(1)
         # if (self.timestamp+100) % 200 == 0:
         #     for x in xrange(0,(self.length*2/3)):
         #         for y in xrange((self.width/3),self.width):
