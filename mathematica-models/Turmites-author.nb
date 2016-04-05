@@ -1,0 +1,2245 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     89474,       2236]
+NotebookOptionsPosition[     85404,       2108]
+NotebookOutlinePosition[     87021,       2159]
+CellTagsIndexPosition[     86693,       2147]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Turmites", "DemoTitle",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.371477600047124*^9, 3.371477603140399*^9}, {
+   3.371493279064438*^9, 3.3714932812780843`*^9}},
+ CellID->700863240],
+
+Cell[CellGroupData[{
+
+Cell["", "InitializationSection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mound", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"{", "0", "}"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"PadCenter", "[", 
+   RowBox[{"A_List", ",", "max_List"}], "]"}], ":=", 
+  RowBox[{"PadRight", "[", 
+   RowBox[{
+    RowBox[{"PadLeft", "[", 
+     RowBox[{"A", ",", 
+      RowBox[{"Floor", "[", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Dimensions", "[", "A", "]"}], "+", "max"}], ")"}], "/", 
+        "2"}], "]"}]}], "]"}], ",", "max"}], "]"}]}]}], "Input",
+ CellChangeTimes->{3.35696210375764*^9, 3.3714936489737825`*^9},
+ CellID->491252009],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"moundstep", "[", 
+    RowBox[{"mound_List", ",", "turmite_List"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"j", "=", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", 
+          RowBox[{"mound", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+       RowBox[{"k", "=", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", 
+          RowBox[{"mound", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+       RowBox[{"x", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ",", 
+       RowBox[{"y", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "2"}], "]"}], "]"}]}], ",", 
+       RowBox[{"state", "=", 
+        RowBox[{
+         RowBox[{"mound", "[", 
+          RowBox[{"[", 
+           RowBox[{"3", ",", "1"}], "]"}], "]"}], "+", "1"}]}], ",", 
+       RowBox[{"direction", "=", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", 
+          RowBox[{"3", ",", "2"}], "]"}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Max", "[", 
+         RowBox[{"j", ",", "k"}], "]"}], "<", "129"}], ",", 
+       RowBox[{"(*", " ", 
+        RowBox[{"**", 
+         RowBox[{
+         "*", "Arbitrarily", " ", "maximum", " ", "size", " ", "of", " ", 
+          RowBox[{"diagram", "**"}], "*"}]}], "*)"}], 
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"old", "=", 
+           RowBox[{"Switch", "[", 
+            RowBox[{"direction", ",", "0", ",", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"x", "\[Equal]", "1"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Prepend", "[", 
+                  RowBox[{
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"Table", "[", 
+                    RowBox[{"0", ",", 
+                    RowBox[{"{", "k", "}"}]}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "-", "1"}], ",", "y"}], "}"}]}], "}"}]}], 
+              "]"}], ",", "1", ",", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"y", "\[Equal]", "1"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Map", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Prepend", "[", 
+                    RowBox[{"#", ",", "0"}], "]"}], "&"}], ",", 
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "-", "1"}]}], "}"}]}], "}"}]}], "]"}], ",", 
+             "2", ",", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"x", "\[Equal]", "j"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Append", "[", 
+                  RowBox[{
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"Table", "[", 
+                    RowBox[{"0", ",", 
+                    RowBox[{"{", "k", "}"}]}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "+", "1"}], ",", "y"}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"x", "+", "1"}], ",", "y"}], "}"}]}], "}"}]}], 
+              "]"}], ",", "3", ",", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"y", "\[Equal]", "k"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Map", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Append", "[", 
+                    RowBox[{"#", ",", "0"}], "]"}], "&"}], ",", 
+                   RowBox[{"mound", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "+", "1"}]}], "}"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"mound", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"y", "+", "1"}]}], "}"}]}], "}"}]}], "]"}]}], 
+            "]"}]}], "}"}], ",", 
+         RowBox[{"With", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"newx", "=", 
+              RowBox[{"old", "[", 
+               RowBox[{"[", 
+                RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ",", 
+             RowBox[{"newy", "=", 
+              RowBox[{"old", "[", 
+               RowBox[{"[", 
+                RowBox[{"2", ",", "2"}], "]"}], "]"}]}]}], "}"}], ",", 
+           RowBox[{"With", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"color", "=", 
+               RowBox[{
+                RowBox[{"old", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"1", ",", "newx", ",", "newy"}], "]"}], "]"}], "+", 
+                "1"}]}], "}"}], ",", 
+             RowBox[{"Append", "[", 
+              RowBox[{
+               RowBox[{"ReplacePart", "[", 
+                RowBox[{"old", ",", 
+                 RowBox[{"turmite", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"state", ",", "color", ",", "1"}], "]"}], "]"}], 
+                 ",", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", "newx", ",", "newy"}], "}"}]}], "]"}], 
+               ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"turmite", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"state", ",", "color", ",", "3"}], "]"}], "]"}], 
+                 ",", 
+                 RowBox[{"Mod", "[", 
+                  RowBox[{
+                   RowBox[{"direction", "+", 
+                    RowBox[{"turmite", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"state", ",", "color", ",", "2"}], "]"}], "]"}]}],
+                    ",", "4"}], "]"}]}], "}"}]}], "]"}]}], "]"}]}], "]"}]}], 
+        "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"mound", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "}"}]}], "]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.665855623619212*^9, 3.665855628654368*^9}, {
+  3.6658556876429253`*^9, 3.6658556922949953`*^9}},
+ CellID->95406474],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"myturmites", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "2"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "2"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "2"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1", ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "}"}]}], "}"}]}], "}"}]}],
+   ";"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3714939773847685`*^9, 3.3714939921190395`*^9}},
+ CellID->958805213]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateSection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{
+     RowBox[{"PadCenter", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"NestWhile", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"moundstep", "[", 
+            RowBox[{"#", ",", 
+             RowBox[{"myturmites", "[", 
+              RowBox[{"[", "a", "]"}], "]"}]}], "]"}], "&"}], ",", "mound", 
+          ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", "#", "]"}], ">", "1"}], " ", "&"}], ",", 
+          "1", ",", "b"}], "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"130", ",", "130"}], "}"}]}], "]"}], ",", 
+     RowBox[{"PixelConstrained", "\[Rule]", " ", "True"}], ",", 
+     RowBox[{"Frame", "\[Rule]", " ", "False"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "400"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "1", ",", "\"\<turmite\>\""}], "}"}], ",", "1", ",", 
+     "44", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", "4000", ",", "\"\<max steps\>\""}], "}"}], ",", "1", 
+     ",", "15000", ",", "1"}], "}"}], ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}], ",", 
+   RowBox[{"ContinuousAction", "\[Rule]", "False"}], ",", 
+   RowBox[{"TrackedSymbols", "\[RuleDelayed]", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "b"}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.371493493517703*^9, {3.371496003161794*^9, 
+   3.3714960247173023`*^9}, {3.3714961224595356`*^9, 
+   3.3714961483584194`*^9}, {3.3714961872017517`*^9, 3.371496188719928*^9}, {
+   3.3714962430146956`*^9, 3.371496244552848*^9}, {3.38445680215625*^9, 
+   3.384456829515625*^9}, {3.38445686715625*^9, 3.38445687621875*^9}},
+ CellID->127727694],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 23, $CellContext`b$$ = 15000, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 1, "turmite"}, 1, 44, 1}, {{
+       Hold[$CellContext`b$$], 4000, "max steps"}, 1, 15000, 1}}, 
+    Typeset`size$$ = {390., {192., 198.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`a$508711$$ = 0, $CellContext`b$508712$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 1, $CellContext`b$$ = 4000}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$508711$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$508712$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          NestWhile[$CellContext`moundstep[#, 
+            
+            Part[$CellContext`myturmites, $CellContext`a$$]]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`b$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{{$CellContext`a$$, 1, "turmite"}, 1, 44, 
+         1}, {{$CellContext`b$$, 4000, "max steps"}, 1, 15000, 1}}, 
+      "Options" :> {
+       ContinuousAction -> False, 
+        TrackedSymbols :> {$CellContext`a$$, $CellContext`b$$}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{435., {249., 254.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`PadCenter[
+         Pattern[$CellContext`A, 
+          Blank[List]], 
+         Pattern[$CellContext`max, 
+          Blank[List]]] := PadRight[
+         PadLeft[$CellContext`A, 
+          
+          Floor[(Dimensions[$CellContext`A] + $CellContext`max)/
+           2]], $CellContext`max], $CellContext`moundstep[
+         Pattern[$CellContext`mound, 
+          Blank[List]], 
+         Pattern[$CellContext`turmite, 
+          Blank[List]]] := With[{$CellContext`j = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 1], $CellContext`k = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 2], $CellContext`x = 
+          Part[$CellContext`mound, 2, 1], $CellContext`y = 
+          Part[$CellContext`mound, 2, 2], $CellContext`state = 
+          Part[$CellContext`mound, 3, 1] + 1, $CellContext`direction = 
+          Part[$CellContext`mound, 3, 2]}, 
+         If[Max[$CellContext`j, $CellContext`k] < 129, 
+          With[{$CellContext`old = Switch[$CellContext`direction, 0, 
+              If[$CellContext`x == 1, {
+                Prepend[
+                 Part[$CellContext`mound, 1], 
+                 Table[
+                 0, {$CellContext`k}]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x - 
+                 1, $CellContext`y}}], 1, 
+              If[$CellContext`y == 1, {
+                Map[Prepend[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y - 
+                 1}}], 2, 
+              If[$CellContext`x == $CellContext`j, {
+                Append[
+                 Part[$CellContext`mound, 1], 
+                 Table[0, {$CellContext`k}]], {$CellContext`x + 
+                 1, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x + 
+                 1, $CellContext`y}}], 3, 
+              If[$CellContext`y == $CellContext`k, {
+                Map[Append[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y + 1}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y + 
+                 1}}]]}, 
+           
+           With[{$CellContext`newx = 
+             Part[$CellContext`old, 2, 1], $CellContext`newy = 
+             Part[$CellContext`old, 2, 2]}, 
+            
+            With[{$CellContext`color = 
+              Part[$CellContext`old, 1, $CellContext`newx, $CellContext`newy] + 
+               1}, 
+             Append[
+              ReplacePart[$CellContext`old, 
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 1], {1, $CellContext`newx, $CellContext`newy}], {
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 3], 
+               
+               Mod[$CellContext`direction + 
+                Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 2], 4]}]]]], {
+           Part[$CellContext`mound, 1]}]], $CellContext`mound = {{{0}}, {1, 
+         1}, {0, 0}}, $CellContext`myturmites = {{{{1, 1, 0}, {0, -1, 
+         0}}}, {{{1, 1, 0}, {0, 0, 0}}}, {{{0, -1, 1}, {1, 1, 1}}, {{1, 0, 
+         0}, {1, 0, 1}}}, {{{0, 0, 1}, {0, -1, 1}}, {{1, 1, 0}, {0, 0, 
+         1}}}, {{{0, 1, 1}, {0, -1, 0}}, {{1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 
+         1}, {0, -1, 0}}, {{1, -1, 1}, {1, 0, 0}}}, {{{0, 1, 1}, {0, 0, 
+         1}}, {{1, 1, 1}, {1, -1, 0}}}, {{{0, 1, 1}, {0, 1, 1}}, {{1, 0, 0}, {
+         0, 1, 1}}}, {{{0, 1, 1}, {1, 1, 1}}, {{1, -1, 1}, {1, -1, 0}}}, {{{
+         1, -1, 0}, {0, 0, 1}}, {{0, -1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 
+         1, 1}}, {{0, 1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 1, 1}}, {{0, 1, 
+         1}, {1, -1, 0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 0, 0}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 1, 1}, {1, 1, 0}}}, {{{1, -1, 
+         1}, {0, -1, 1}}, {{1, 1, 1}, {0, -1, 0}}}, {{{1, -1, 1}, {0, 0, 
+         0}}, {{1, 0, 0}, {1, 1, 0}}}, {{{1, -1, 1}, {0, 1, 0}}, {{0, -1, 
+         0}, {0, -1, 0}}}, {{{1, -1, 1}, {1, -1, 1}}, {{1, 1, 1}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {1, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, -1, 
+         1}, {1, 1, 1}}, {{1, 0, 0}, {0, 0, 1}}}, {{{1, 0, 1}, {0, -1, 1}}, {{
+         1, 1, 0}, {1, 0, 1}}}, {{{1, 0, 1}, {0, 0, 0}}, {{0, 1, 0}, {1, -1, 
+         0}}}, {{{1, 0, 1}, {0, 0, 1}}, {{1, 1, 1}, {0, 0, 0}}}, {{{1, 0, 
+         1}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, 0, 1}, {0, 1, 
+         1}}, {{1, -1, 0}, {1, 1, 0}}}, {{{1, 0, 1}, {1, -1, 0}}, {{1, 1, 
+         1}, {0, 0, 0}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 0, 
+         1}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 1, 1}}}, {{{1, 1, 
+         0}, {1, 1, 1}}, {{0, 0, 0}, {0, 0, 1}}}, {{{1, 1, 1}, {0, -1, 1}}, {{
+         1, 0, 0}, {0, 0, 0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, -1, 1}, {1, -1, 
+         0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, 0, 0}, {1, 1, 1}}}, {{{1, 1, 
+         1}, {0, 1, 1}}, {{1, 0, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, -1, 1}}, {{
+         1, 1, 1}, {0, 1, 0}}}, {{{1, 1, 1}, {1, 0, 0}}, {{1, 0, 0}, {0, 0, 
+         1}}}, {{{1, 1, 1}, {1, 1, 0}}, {{0, 0, 0}, {0, 0, 0}}}, {{{1, 1, 
+         1}, {1, 1, 0}}, {{0, 1, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, 1, 1}}, {{
+         1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 1}, {1, 1, 1}}, {{0, -1, 2}, {0, -1,
+          0}}, {{1, 1, 2}, {1, -1, 0}}}, {{{1, -1, 1}, {0, 0, 0}}, {{0, 1, 
+         2}, {1, -1, 0}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {0, 0, 
+         2}}, {{0, 1, 2}, {1, 0, 1}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {
+         1, -1, 1}}, {{1, 0, 0}, {0, 0, 2}}, {{0, -1, 1}, {1, 0, 1}}}, {{{
+         1, -1, 2}, {0, 1, 0}}, {{1, -1, 0}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 
+         1}}}, {{{1, 1, 0}, {0, 1, 2}}, {{0, -1, 0}, {0, 1, 0}}, {{0, 0, 1}, {
+         1, -1, 0}}}, {{{1, 1, 1}, {0, -1, 0}}, {{1, 1, 2}, {0, 0, 0}}, {{
+         1, -1, 0}, {0, -1, 0}}}}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.665854992947207*^9, 3.665854996656687*^9}},
+ CellID->276415291]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateCaptionSection"],
+
+Cell["\<\
+A turmite is a set of rules for moving a cell on a grid. Turmites are also \
+called turning machines or 2D Turing machines. The simplest turmite, known as \
+Langton's ant, starts on an infinite grid of white squares. Each time the ant \
+moves off a square, the color changes (white to black or vice versa). \
+Whenever the ant lands on a black square, it turns right. Whenever the ant \
+lands on a white square, it turns left. This simple rule and its \
+generalizations lead to amazing patterns.\
+\>", "ManipulateCaption",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3714781939960427`*^9, 3.371478253038562*^9}, {
+   3.3714938572068014`*^9, 3.371493916905141*^9}, {3.378482167825177*^9, 
+   3.3784824189820957`*^9}, 3.37848251342461*^9, {3.3784826131139927`*^9, 
+   3.378482660092481*^9}, {3.3784826934511137`*^9, 3.3784827280715857`*^9}, {
+   3.381524913099137*^9, 3.381525024653652*^9}, {3.3815250850782337`*^9, 
+   3.3815251138451476`*^9}, {3.3815251888088565`*^9, 
+   3.3815251915586452`*^9}, {3.381536370954568*^9, 3.3815363764702992`*^9}},
+ CellID->266378341]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ThumbnailSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1, $CellContext`b$$ = 15000, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 1, "turmite"}, 1, 44, 1}, {{
+       Hold[$CellContext`b$$], 15000, "max steps"}, 1, 15000, 1}}, 
+    Typeset`size$$ = {390., {193., 197.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`a$508767$$ = 0, $CellContext`b$508768$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 1, $CellContext`b$$ = 15000}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$508767$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$508768$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          NestWhile[$CellContext`moundstep[#, 
+            
+            Part[$CellContext`myturmites, $CellContext`a$$]]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`b$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{{$CellContext`a$$, 1, "turmite"}, 1, 44, 
+         1}, {{$CellContext`b$$, 15000, "max steps"}, 1, 15000, 1}}, 
+      "Options" :> {
+       ContinuousAction -> False, 
+        TrackedSymbols :> {$CellContext`a$$, $CellContext`b$$}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{434., {250., 255.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`PadCenter[
+         Pattern[$CellContext`A, 
+          Blank[List]], 
+         Pattern[$CellContext`max, 
+          Blank[List]]] := PadRight[
+         PadLeft[$CellContext`A, 
+          
+          Floor[(Dimensions[$CellContext`A] + $CellContext`max)/
+           2]], $CellContext`max], $CellContext`moundstep[
+         Pattern[$CellContext`mound, 
+          Blank[List]], 
+         Pattern[$CellContext`turmite, 
+          Blank[List]]] := With[{$CellContext`j = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 1], $CellContext`k = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 2], $CellContext`x = 
+          Part[$CellContext`mound, 2, 1], $CellContext`y = 
+          Part[$CellContext`mound, 2, 2], $CellContext`state = 
+          Part[$CellContext`mound, 3, 1] + 1, $CellContext`direction = 
+          Part[$CellContext`mound, 3, 2]}, 
+         If[Max[$CellContext`j, $CellContext`k] < 129, 
+          With[{$CellContext`old = Switch[$CellContext`direction, 0, 
+              If[$CellContext`x == 1, {
+                Prepend[
+                 Part[$CellContext`mound, 1], 
+                 Table[
+                 0, {$CellContext`k}]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x - 
+                 1, $CellContext`y}}], 1, 
+              If[$CellContext`y == 1, {
+                Map[Prepend[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y - 
+                 1}}], 2, 
+              If[$CellContext`x == $CellContext`j, {
+                Append[
+                 Part[$CellContext`mound, 1], 
+                 Table[0, {$CellContext`k}]], {$CellContext`x + 
+                 1, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x + 
+                 1, $CellContext`y}}], 3, 
+              If[$CellContext`y == $CellContext`k, {
+                Map[Append[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y + 1}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y + 
+                 1}}]]}, 
+           
+           With[{$CellContext`newx = 
+             Part[$CellContext`old, 2, 1], $CellContext`newy = 
+             Part[$CellContext`old, 2, 2]}, 
+            
+            With[{$CellContext`color = 
+              Part[$CellContext`old, 1, $CellContext`newx, $CellContext`newy] + 
+               1}, 
+             Append[
+              ReplacePart[$CellContext`old, 
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 1], {1, $CellContext`newx, $CellContext`newy}], {
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 3], 
+               
+               Mod[$CellContext`direction + 
+                Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 2], 4]}]]]], {
+           Part[$CellContext`mound, 1]}]], $CellContext`mound = {{{0}}, {1, 
+         1}, {0, 0}}, $CellContext`myturmites = {{{{1, 1, 0}, {0, -1, 
+         0}}}, {{{1, 1, 0}, {0, 0, 0}}}, {{{0, -1, 1}, {1, 1, 1}}, {{1, 0, 
+         0}, {1, 0, 1}}}, {{{0, 0, 1}, {0, -1, 1}}, {{1, 1, 0}, {0, 0, 
+         1}}}, {{{0, 1, 1}, {0, -1, 0}}, {{1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 
+         1}, {0, -1, 0}}, {{1, -1, 1}, {1, 0, 0}}}, {{{0, 1, 1}, {0, 0, 
+         1}}, {{1, 1, 1}, {1, -1, 0}}}, {{{0, 1, 1}, {0, 1, 1}}, {{1, 0, 0}, {
+         0, 1, 1}}}, {{{0, 1, 1}, {1, 1, 1}}, {{1, -1, 1}, {1, -1, 0}}}, {{{
+         1, -1, 0}, {0, 0, 1}}, {{0, -1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 
+         1, 1}}, {{0, 1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 1, 1}}, {{0, 1, 
+         1}, {1, -1, 0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 0, 0}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 1, 1}, {1, 1, 0}}}, {{{1, -1, 
+         1}, {0, -1, 1}}, {{1, 1, 1}, {0, -1, 0}}}, {{{1, -1, 1}, {0, 0, 
+         0}}, {{1, 0, 0}, {1, 1, 0}}}, {{{1, -1, 1}, {0, 1, 0}}, {{0, -1, 
+         0}, {0, -1, 0}}}, {{{1, -1, 1}, {1, -1, 1}}, {{1, 1, 1}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {1, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, -1, 
+         1}, {1, 1, 1}}, {{1, 0, 0}, {0, 0, 1}}}, {{{1, 0, 1}, {0, -1, 1}}, {{
+         1, 1, 0}, {1, 0, 1}}}, {{{1, 0, 1}, {0, 0, 0}}, {{0, 1, 0}, {1, -1, 
+         0}}}, {{{1, 0, 1}, {0, 0, 1}}, {{1, 1, 1}, {0, 0, 0}}}, {{{1, 0, 
+         1}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, 0, 1}, {0, 1, 
+         1}}, {{1, -1, 0}, {1, 1, 0}}}, {{{1, 0, 1}, {1, -1, 0}}, {{1, 1, 
+         1}, {0, 0, 0}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 0, 
+         1}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 1, 1}}}, {{{1, 1, 
+         0}, {1, 1, 1}}, {{0, 0, 0}, {0, 0, 1}}}, {{{1, 1, 1}, {0, -1, 1}}, {{
+         1, 0, 0}, {0, 0, 0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, -1, 1}, {1, -1, 
+         0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, 0, 0}, {1, 1, 1}}}, {{{1, 1, 
+         1}, {0, 1, 1}}, {{1, 0, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, -1, 1}}, {{
+         1, 1, 1}, {0, 1, 0}}}, {{{1, 1, 1}, {1, 0, 0}}, {{1, 0, 0}, {0, 0, 
+         1}}}, {{{1, 1, 1}, {1, 1, 0}}, {{0, 0, 0}, {0, 0, 0}}}, {{{1, 1, 
+         1}, {1, 1, 0}}, {{0, 1, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, 1, 1}}, {{
+         1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 1}, {1, 1, 1}}, {{0, -1, 2}, {0, -1,
+          0}}, {{1, 1, 2}, {1, -1, 0}}}, {{{1, -1, 1}, {0, 0, 0}}, {{0, 1, 
+         2}, {1, -1, 0}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {0, 0, 
+         2}}, {{0, 1, 2}, {1, 0, 1}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {
+         1, -1, 1}}, {{1, 0, 0}, {0, 0, 2}}, {{0, -1, 1}, {1, 0, 1}}}, {{{
+         1, -1, 2}, {0, 1, 0}}, {{1, -1, 0}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 
+         1}}}, {{{1, 1, 0}, {0, 1, 2}}, {{0, -1, 0}, {0, 1, 0}}, {{0, 0, 1}, {
+         1, -1, 0}}}, {{{1, 1, 1}, {0, -1, 0}}, {{1, 1, 2}, {0, 0, 0}}, {{
+         1, -1, 0}, {0, -1, 0}}}}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->296207183]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SnapshotsSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 24, $CellContext`b$$ = 12897, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 24, "turmite"}, 1, 44, 1}, {{
+       Hold[$CellContext`b$$], 12897, "max steps"}, 1, 15000, 1}}, 
+    Typeset`size$$ = {390., {193., 197.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`a$508823$$ = 0, $CellContext`b$508824$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 24, $CellContext`b$$ = 12897}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$508823$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$508824$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          NestWhile[$CellContext`moundstep[#, 
+            
+            Part[$CellContext`myturmites, $CellContext`a$$]]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`b$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{{$CellContext`a$$, 24, "turmite"}, 1, 44, 
+         1}, {{$CellContext`b$$, 12897, "max steps"}, 1, 15000, 1}}, 
+      "Options" :> {
+       ContinuousAction -> False, 
+        TrackedSymbols :> {$CellContext`a$$, $CellContext`b$$}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{435., {249., 254.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`PadCenter[
+         Pattern[$CellContext`A, 
+          Blank[List]], 
+         Pattern[$CellContext`max, 
+          Blank[List]]] := PadRight[
+         PadLeft[$CellContext`A, 
+          
+          Floor[(Dimensions[$CellContext`A] + $CellContext`max)/
+           2]], $CellContext`max], $CellContext`moundstep[
+         Pattern[$CellContext`mound, 
+          Blank[List]], 
+         Pattern[$CellContext`turmite, 
+          Blank[List]]] := With[{$CellContext`j = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 1], $CellContext`k = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 2], $CellContext`x = 
+          Part[$CellContext`mound, 2, 1], $CellContext`y = 
+          Part[$CellContext`mound, 2, 2], $CellContext`state = 
+          Part[$CellContext`mound, 3, 1] + 1, $CellContext`direction = 
+          Part[$CellContext`mound, 3, 2]}, 
+         If[Max[$CellContext`j, $CellContext`k] < 129, 
+          With[{$CellContext`old = Switch[$CellContext`direction, 0, 
+              If[$CellContext`x == 1, {
+                Prepend[
+                 Part[$CellContext`mound, 1], 
+                 Table[
+                 0, {$CellContext`k}]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x - 
+                 1, $CellContext`y}}], 1, 
+              If[$CellContext`y == 1, {
+                Map[Prepend[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y - 
+                 1}}], 2, 
+              If[$CellContext`x == $CellContext`j, {
+                Append[
+                 Part[$CellContext`mound, 1], 
+                 Table[0, {$CellContext`k}]], {$CellContext`x + 
+                 1, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x + 
+                 1, $CellContext`y}}], 3, 
+              If[$CellContext`y == $CellContext`k, {
+                Map[Append[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y + 1}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y + 
+                 1}}]]}, 
+           
+           With[{$CellContext`newx = 
+             Part[$CellContext`old, 2, 1], $CellContext`newy = 
+             Part[$CellContext`old, 2, 2]}, 
+            
+            With[{$CellContext`color = 
+              Part[$CellContext`old, 1, $CellContext`newx, $CellContext`newy] + 
+               1}, 
+             Append[
+              ReplacePart[$CellContext`old, 
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 1], {1, $CellContext`newx, $CellContext`newy}], {
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 3], 
+               
+               Mod[$CellContext`direction + 
+                Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 2], 4]}]]]], {
+           Part[$CellContext`mound, 1]}]], $CellContext`mound = {{{0}}, {1, 
+         1}, {0, 0}}, $CellContext`myturmites = {{{{1, 1, 0}, {0, -1, 
+         0}}}, {{{1, 1, 0}, {0, 0, 0}}}, {{{0, -1, 1}, {1, 1, 1}}, {{1, 0, 
+         0}, {1, 0, 1}}}, {{{0, 0, 1}, {0, -1, 1}}, {{1, 1, 0}, {0, 0, 
+         1}}}, {{{0, 1, 1}, {0, -1, 0}}, {{1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 
+         1}, {0, -1, 0}}, {{1, -1, 1}, {1, 0, 0}}}, {{{0, 1, 1}, {0, 0, 
+         1}}, {{1, 1, 1}, {1, -1, 0}}}, {{{0, 1, 1}, {0, 1, 1}}, {{1, 0, 0}, {
+         0, 1, 1}}}, {{{0, 1, 1}, {1, 1, 1}}, {{1, -1, 1}, {1, -1, 0}}}, {{{
+         1, -1, 0}, {0, 0, 1}}, {{0, -1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 
+         1, 1}}, {{0, 1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 1, 1}}, {{0, 1, 
+         1}, {1, -1, 0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 0, 0}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 1, 1}, {1, 1, 0}}}, {{{1, -1, 
+         1}, {0, -1, 1}}, {{1, 1, 1}, {0, -1, 0}}}, {{{1, -1, 1}, {0, 0, 
+         0}}, {{1, 0, 0}, {1, 1, 0}}}, {{{1, -1, 1}, {0, 1, 0}}, {{0, -1, 
+         0}, {0, -1, 0}}}, {{{1, -1, 1}, {1, -1, 1}}, {{1, 1, 1}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {1, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, -1, 
+         1}, {1, 1, 1}}, {{1, 0, 0}, {0, 0, 1}}}, {{{1, 0, 1}, {0, -1, 1}}, {{
+         1, 1, 0}, {1, 0, 1}}}, {{{1, 0, 1}, {0, 0, 0}}, {{0, 1, 0}, {1, -1, 
+         0}}}, {{{1, 0, 1}, {0, 0, 1}}, {{1, 1, 1}, {0, 0, 0}}}, {{{1, 0, 
+         1}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, 0, 1}, {0, 1, 
+         1}}, {{1, -1, 0}, {1, 1, 0}}}, {{{1, 0, 1}, {1, -1, 0}}, {{1, 1, 
+         1}, {0, 0, 0}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 0, 
+         1}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 1, 1}}}, {{{1, 1, 
+         0}, {1, 1, 1}}, {{0, 0, 0}, {0, 0, 1}}}, {{{1, 1, 1}, {0, -1, 1}}, {{
+         1, 0, 0}, {0, 0, 0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, -1, 1}, {1, -1, 
+         0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, 0, 0}, {1, 1, 1}}}, {{{1, 1, 
+         1}, {0, 1, 1}}, {{1, 0, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, -1, 1}}, {{
+         1, 1, 1}, {0, 1, 0}}}, {{{1, 1, 1}, {1, 0, 0}}, {{1, 0, 0}, {0, 0, 
+         1}}}, {{{1, 1, 1}, {1, 1, 0}}, {{0, 0, 0}, {0, 0, 0}}}, {{{1, 1, 
+         1}, {1, 1, 0}}, {{0, 1, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, 1, 1}}, {{
+         1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 1}, {1, 1, 1}}, {{0, -1, 2}, {0, -1,
+          0}}, {{1, 1, 2}, {1, -1, 0}}}, {{{1, -1, 1}, {0, 0, 0}}, {{0, 1, 
+         2}, {1, -1, 0}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {0, 0, 
+         2}}, {{0, 1, 2}, {1, 0, 1}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {
+         1, -1, 1}}, {{1, 0, 0}, {0, 0, 2}}, {{0, -1, 1}, {1, 0, 1}}}, {{{
+         1, -1, 2}, {0, 1, 0}}, {{1, -1, 0}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 
+         1}}}, {{{1, 1, 0}, {0, 1, 2}}, {{0, -1, 0}, {0, 1, 0}}, {{0, 0, 1}, {
+         1, -1, 0}}}, {{{1, 1, 1}, {0, -1, 0}}, {{1, 1, 2}, {0, 0, 0}}, {{
+         1, -1, 0}, {0, -1, 0}}}}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->77322170],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 17, $CellContext`b$$ = 15000, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 17, "turmite"}, 1, 44, 1}, {{
+       Hold[$CellContext`b$$], 15000, "max steps"}, 1, 15000, 1}}, 
+    Typeset`size$$ = {390., {193., 197.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`a$508879$$ = 0, $CellContext`b$508880$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 17, $CellContext`b$$ = 15000}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$508879$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$508880$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          NestWhile[$CellContext`moundstep[#, 
+            
+            Part[$CellContext`myturmites, $CellContext`a$$]]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`b$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{{$CellContext`a$$, 17, "turmite"}, 1, 44, 
+         1}, {{$CellContext`b$$, 15000, "max steps"}, 1, 15000, 1}}, 
+      "Options" :> {
+       ContinuousAction -> False, 
+        TrackedSymbols :> {$CellContext`a$$, $CellContext`b$$}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{435., {249., 254.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`PadCenter[
+         Pattern[$CellContext`A, 
+          Blank[List]], 
+         Pattern[$CellContext`max, 
+          Blank[List]]] := PadRight[
+         PadLeft[$CellContext`A, 
+          
+          Floor[(Dimensions[$CellContext`A] + $CellContext`max)/
+           2]], $CellContext`max], $CellContext`moundstep[
+         Pattern[$CellContext`mound, 
+          Blank[List]], 
+         Pattern[$CellContext`turmite, 
+          Blank[List]]] := With[{$CellContext`j = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 1], $CellContext`k = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 2], $CellContext`x = 
+          Part[$CellContext`mound, 2, 1], $CellContext`y = 
+          Part[$CellContext`mound, 2, 2], $CellContext`state = 
+          Part[$CellContext`mound, 3, 1] + 1, $CellContext`direction = 
+          Part[$CellContext`mound, 3, 2]}, 
+         If[Max[$CellContext`j, $CellContext`k] < 129, 
+          With[{$CellContext`old = Switch[$CellContext`direction, 0, 
+              If[$CellContext`x == 1, {
+                Prepend[
+                 Part[$CellContext`mound, 1], 
+                 Table[
+                 0, {$CellContext`k}]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x - 
+                 1, $CellContext`y}}], 1, 
+              If[$CellContext`y == 1, {
+                Map[Prepend[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y - 
+                 1}}], 2, 
+              If[$CellContext`x == $CellContext`j, {
+                Append[
+                 Part[$CellContext`mound, 1], 
+                 Table[0, {$CellContext`k}]], {$CellContext`x + 
+                 1, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x + 
+                 1, $CellContext`y}}], 3, 
+              If[$CellContext`y == $CellContext`k, {
+                Map[Append[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y + 1}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y + 
+                 1}}]]}, 
+           
+           With[{$CellContext`newx = 
+             Part[$CellContext`old, 2, 1], $CellContext`newy = 
+             Part[$CellContext`old, 2, 2]}, 
+            
+            With[{$CellContext`color = 
+              Part[$CellContext`old, 1, $CellContext`newx, $CellContext`newy] + 
+               1}, 
+             Append[
+              ReplacePart[$CellContext`old, 
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 1], {1, $CellContext`newx, $CellContext`newy}], {
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 3], 
+               
+               Mod[$CellContext`direction + 
+                Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 2], 4]}]]]], {
+           Part[$CellContext`mound, 1]}]], $CellContext`mound = {{{0}}, {1, 
+         1}, {0, 0}}, $CellContext`myturmites = {{{{1, 1, 0}, {0, -1, 
+         0}}}, {{{1, 1, 0}, {0, 0, 0}}}, {{{0, -1, 1}, {1, 1, 1}}, {{1, 0, 
+         0}, {1, 0, 1}}}, {{{0, 0, 1}, {0, -1, 1}}, {{1, 1, 0}, {0, 0, 
+         1}}}, {{{0, 1, 1}, {0, -1, 0}}, {{1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 
+         1}, {0, -1, 0}}, {{1, -1, 1}, {1, 0, 0}}}, {{{0, 1, 1}, {0, 0, 
+         1}}, {{1, 1, 1}, {1, -1, 0}}}, {{{0, 1, 1}, {0, 1, 1}}, {{1, 0, 0}, {
+         0, 1, 1}}}, {{{0, 1, 1}, {1, 1, 1}}, {{1, -1, 1}, {1, -1, 0}}}, {{{
+         1, -1, 0}, {0, 0, 1}}, {{0, -1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 
+         1, 1}}, {{0, 1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 1, 1}}, {{0, 1, 
+         1}, {1, -1, 0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 0, 0}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 1, 1}, {1, 1, 0}}}, {{{1, -1, 
+         1}, {0, -1, 1}}, {{1, 1, 1}, {0, -1, 0}}}, {{{1, -1, 1}, {0, 0, 
+         0}}, {{1, 0, 0}, {1, 1, 0}}}, {{{1, -1, 1}, {0, 1, 0}}, {{0, -1, 
+         0}, {0, -1, 0}}}, {{{1, -1, 1}, {1, -1, 1}}, {{1, 1, 1}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {1, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, -1, 
+         1}, {1, 1, 1}}, {{1, 0, 0}, {0, 0, 1}}}, {{{1, 0, 1}, {0, -1, 1}}, {{
+         1, 1, 0}, {1, 0, 1}}}, {{{1, 0, 1}, {0, 0, 0}}, {{0, 1, 0}, {1, -1, 
+         0}}}, {{{1, 0, 1}, {0, 0, 1}}, {{1, 1, 1}, {0, 0, 0}}}, {{{1, 0, 
+         1}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, 0, 1}, {0, 1, 
+         1}}, {{1, -1, 0}, {1, 1, 0}}}, {{{1, 0, 1}, {1, -1, 0}}, {{1, 1, 
+         1}, {0, 0, 0}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 0, 
+         1}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 1, 1}}}, {{{1, 1, 
+         0}, {1, 1, 1}}, {{0, 0, 0}, {0, 0, 1}}}, {{{1, 1, 1}, {0, -1, 1}}, {{
+         1, 0, 0}, {0, 0, 0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, -1, 1}, {1, -1, 
+         0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, 0, 0}, {1, 1, 1}}}, {{{1, 1, 
+         1}, {0, 1, 1}}, {{1, 0, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, -1, 1}}, {{
+         1, 1, 1}, {0, 1, 0}}}, {{{1, 1, 1}, {1, 0, 0}}, {{1, 0, 0}, {0, 0, 
+         1}}}, {{{1, 1, 1}, {1, 1, 0}}, {{0, 0, 0}, {0, 0, 0}}}, {{{1, 1, 
+         1}, {1, 1, 0}}, {{0, 1, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, 1, 1}}, {{
+         1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 1}, {1, 1, 1}}, {{0, -1, 2}, {0, -1,
+          0}}, {{1, 1, 2}, {1, -1, 0}}}, {{{1, -1, 1}, {0, 0, 0}}, {{0, 1, 
+         2}, {1, -1, 0}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {0, 0, 
+         2}}, {{0, 1, 2}, {1, 0, 1}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {
+         1, -1, 1}}, {{1, 0, 0}, {0, 0, 2}}, {{0, -1, 1}, {1, 0, 1}}}, {{{
+         1, -1, 2}, {0, 1, 0}}, {{1, -1, 0}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 
+         1}}}, {{{1, 1, 0}, {0, 1, 2}}, {{0, -1, 0}, {0, 1, 0}}, {{0, 0, 1}, {
+         1, -1, 0}}}, {{{1, 1, 1}, {0, -1, 0}}, {{1, 1, 2}, {0, 0, 0}}, {{
+         1, -1, 0}, {0, -1, 0}}}}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->92042242],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 42, $CellContext`b$$ = 14643, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 42, "turmite"}, 1, 44, 1}, {{
+       Hold[$CellContext`b$$], 14643, "max steps"}, 1, 15000, 1}}, 
+    Typeset`size$$ = {390., {193., 197.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`a$508935$$ = 0, $CellContext`b$508936$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 42, $CellContext`b$$ = 14643}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$508935$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$508936$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`PadCenter[
+         Part[
+          NestWhile[$CellContext`moundstep[#, 
+            
+            Part[$CellContext`myturmites, $CellContext`a$$]]& , \
+$CellContext`mound, Length[#] > 1& , 1, $CellContext`b$$], 1], {130, 130}], 
+        PixelConstrained -> True, Frame -> False, ImageSize -> 400], 
+      "Specifications" :> {{{$CellContext`a$$, 42, "turmite"}, 1, 44, 
+         1}, {{$CellContext`b$$, 14643, "max steps"}, 1, 15000, 1}}, 
+      "Options" :> {
+       ContinuousAction -> False, 
+        TrackedSymbols :> {$CellContext`a$$, $CellContext`b$$}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{435., {249., 254.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`PadCenter[
+         Pattern[$CellContext`A, 
+          Blank[List]], 
+         Pattern[$CellContext`max, 
+          Blank[List]]] := PadRight[
+         PadLeft[$CellContext`A, 
+          
+          Floor[(Dimensions[$CellContext`A] + $CellContext`max)/
+           2]], $CellContext`max], $CellContext`moundstep[
+         Pattern[$CellContext`mound, 
+          Blank[List]], 
+         Pattern[$CellContext`turmite, 
+          Blank[List]]] := With[{$CellContext`j = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 1], $CellContext`k = Part[
+            Dimensions[
+             Part[$CellContext`mound, 1]], 2], $CellContext`x = 
+          Part[$CellContext`mound, 2, 1], $CellContext`y = 
+          Part[$CellContext`mound, 2, 2], $CellContext`state = 
+          Part[$CellContext`mound, 3, 1] + 1, $CellContext`direction = 
+          Part[$CellContext`mound, 3, 2]}, 
+         If[Max[$CellContext`j, $CellContext`k] < 129, 
+          With[{$CellContext`old = Switch[$CellContext`direction, 0, 
+              If[$CellContext`x == 1, {
+                Prepend[
+                 Part[$CellContext`mound, 1], 
+                 Table[
+                 0, {$CellContext`k}]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x - 
+                 1, $CellContext`y}}], 1, 
+              If[$CellContext`y == 1, {
+                Map[Prepend[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y - 
+                 1}}], 2, 
+              If[$CellContext`x == $CellContext`j, {
+                Append[
+                 Part[$CellContext`mound, 1], 
+                 Table[0, {$CellContext`k}]], {$CellContext`x + 
+                 1, $CellContext`y}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x + 
+                 1, $CellContext`y}}], 3, 
+              If[$CellContext`y == $CellContext`k, {
+                Map[Append[#, 0]& , 
+                 
+                 Part[$CellContext`mound, 
+                  1]], {$CellContext`x, $CellContext`y + 1}}, {
+                
+                Part[$CellContext`mound, 1], {$CellContext`x, $CellContext`y + 
+                 1}}]]}, 
+           
+           With[{$CellContext`newx = 
+             Part[$CellContext`old, 2, 1], $CellContext`newy = 
+             Part[$CellContext`old, 2, 2]}, 
+            
+            With[{$CellContext`color = 
+              Part[$CellContext`old, 1, $CellContext`newx, $CellContext`newy] + 
+               1}, 
+             Append[
+              ReplacePart[$CellContext`old, 
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 1], {1, $CellContext`newx, $CellContext`newy}], {
+               
+               Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 3], 
+               
+               Mod[$CellContext`direction + 
+                Part[$CellContext`turmite, $CellContext`state, \
+$CellContext`color, 2], 4]}]]]], {
+           Part[$CellContext`mound, 1]}]], $CellContext`mound = {{{0}}, {1, 
+         1}, {0, 0}}, $CellContext`myturmites = {{{{1, 1, 0}, {0, -1, 
+         0}}}, {{{1, 1, 0}, {0, 0, 0}}}, {{{0, -1, 1}, {1, 1, 1}}, {{1, 0, 
+         0}, {1, 0, 1}}}, {{{0, 0, 1}, {0, -1, 1}}, {{1, 1, 0}, {0, 0, 
+         1}}}, {{{0, 1, 1}, {0, -1, 0}}, {{1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 
+         1}, {0, -1, 0}}, {{1, -1, 1}, {1, 0, 0}}}, {{{0, 1, 1}, {0, 0, 
+         1}}, {{1, 1, 1}, {1, -1, 0}}}, {{{0, 1, 1}, {0, 1, 1}}, {{1, 0, 0}, {
+         0, 1, 1}}}, {{{0, 1, 1}, {1, 1, 1}}, {{1, -1, 1}, {1, -1, 0}}}, {{{
+         1, -1, 0}, {0, 0, 1}}, {{0, -1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 
+         1, 1}}, {{0, 1, 0}, {0, -1, 1}}}, {{{1, -1, 0}, {1, 1, 1}}, {{0, 1, 
+         1}, {1, -1, 0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 0, 0}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {0, -1, 0}}, {{1, 1, 1}, {1, 1, 0}}}, {{{1, -1, 
+         1}, {0, -1, 1}}, {{1, 1, 1}, {0, -1, 0}}}, {{{1, -1, 1}, {0, 0, 
+         0}}, {{1, 0, 0}, {1, 1, 0}}}, {{{1, -1, 1}, {0, 1, 0}}, {{0, -1, 
+         0}, {0, -1, 0}}}, {{{1, -1, 1}, {1, -1, 1}}, {{1, 1, 1}, {0, 0, 
+         0}}}, {{{1, -1, 1}, {1, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, -1, 
+         1}, {1, 1, 1}}, {{1, 0, 0}, {0, 0, 1}}}, {{{1, 0, 1}, {0, -1, 1}}, {{
+         1, 1, 0}, {1, 0, 1}}}, {{{1, 0, 1}, {0, 0, 0}}, {{0, 1, 0}, {1, -1, 
+         0}}}, {{{1, 0, 1}, {0, 0, 1}}, {{1, 1, 1}, {0, 0, 0}}}, {{{1, 0, 
+         1}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 0}}}, {{{1, 0, 1}, {0, 1, 
+         1}}, {{1, -1, 0}, {1, 1, 0}}}, {{{1, 0, 1}, {1, -1, 0}}, {{1, 1, 
+         1}, {0, 0, 0}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 0, 
+         1}}}, {{{1, 1, 0}, {0, -1, 1}}, {{1, -1, 0}, {0, 1, 1}}}, {{{1, 1, 
+         0}, {1, 1, 1}}, {{0, 0, 0}, {0, 0, 1}}}, {{{1, 1, 1}, {0, -1, 1}}, {{
+         1, 0, 0}, {0, 0, 0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, -1, 1}, {1, -1, 
+         0}}}, {{{1, 1, 1}, {0, 1, 0}}, {{0, 0, 0}, {1, 1, 1}}}, {{{1, 1, 
+         1}, {0, 1, 1}}, {{1, 0, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, -1, 1}}, {{
+         1, 1, 1}, {0, 1, 0}}}, {{{1, 1, 1}, {1, 0, 0}}, {{1, 0, 0}, {0, 0, 
+         1}}}, {{{1, 1, 1}, {1, 1, 0}}, {{0, 0, 0}, {0, 0, 0}}}, {{{1, 1, 
+         1}, {1, 1, 0}}, {{0, 1, 0}, {1, 0, 1}}}, {{{1, 1, 1}, {1, 1, 1}}, {{
+         1, -1, 1}, {0, 1, 0}}}, {{{0, 1, 1}, {1, 1, 1}}, {{0, -1, 2}, {0, -1,
+          0}}, {{1, 1, 2}, {1, -1, 0}}}, {{{1, -1, 1}, {0, 0, 0}}, {{0, 1, 
+         2}, {1, -1, 0}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {0, 0, 
+         2}}, {{0, 1, 2}, {1, 0, 1}}, {{1, 1, 1}, {1, 0, 0}}}, {{{1, -1, 1}, {
+         1, -1, 1}}, {{1, 0, 0}, {0, 0, 2}}, {{0, -1, 1}, {1, 0, 1}}}, {{{
+         1, -1, 2}, {0, 1, 0}}, {{1, -1, 0}, {0, 1, 0}}, {{0, -1, 0}, {0, -1, 
+         1}}}, {{{1, 1, 0}, {0, 1, 2}}, {{0, -1, 0}, {0, 1, 0}}, {{0, 0, 1}, {
+         1, -1, 0}}}, {{{1, 1, 1}, {0, -1, 0}}, {{1, 1, 2}, {0, 0, 0}}, {{
+         1, -1, 0}, {0, -1, 0}}}}}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->373763082]
+}, Open  ]],
+
+Cell["", "DetailsSection"],
+
+Cell[CellGroupData[{
+
+Cell["", "ControlSuggestionsSection"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Resize Images"]}],
+  "\"Click inside an image to reveal its orange resize frame.\\nDrag any of \
+the orange resize handles to resize the image.\"",
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"ResizeImages"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Rotate and Zoom in 3D"]}],
+  RowBox[{
+   "\"Drag a 3D graphic to rotate it. Starting the drag near the center \
+tumbles\\nthe graphic; starting near a corner turns it parallel to the plane \
+of the screen.\\nHold down \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" (or \"", 
+    FrameBox[
+    "Cmd", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" on Mac) and drag up and down to zoom.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"RotateAndZoomIn3D"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Drag Locators"]}],
+  RowBox[{"\"Drag any locator (\"", 
+    GraphicsBox[
+     LocatorBox[
+      Scaled[{0.5, 0.5}]], ImageSize -> 20], 
+    "\", etc.) to move it around.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"DragLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Create and Delete Locators"]}],
+  RowBox[{"\"Insert a new locator in the graphic by holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key\\nand clicking where you want it to be. Delete a locator by \
+clicking it\\nwhile holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" key.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"CreateAndDeleteLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Slider Zoom"]}],
+  RowBox[{"\"Hold down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key while moving a slider to make fine adjustments in the slider \
+value.\\nHold \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" and/or \"", 
+    FrameBox[
+    "Shift", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" at the same time as \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" to make ever finer adjustments.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"SliderZoom"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Gamepad Controls"]}],
+  "\"Control this Demonstration with a gamepad or other\\nhuman interface \
+device connected to your computer.\"",
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"GamepadControls"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Automatic Animation"]}],
+  RowBox[{"\"Animate a slider in this Demonstration by clicking the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcIKwAgOI/R/IhBKc\n\
+/4EAyGAG0f+nTZsGwgysIJIRKsWKLAXGIHFmEpUgLADxWUAkI24jZs+eTaEt\n\
+IG+wQKRmzJgBlYf5lhEA30OqWA=="], "Graphics", ImageSize -> {9, 9}, ImageMargins -> 
+      0], BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"button\\nnext to the slider, and then clicking the play button that \
+appears.\\nAnimate all controls by selecting \"", 
+    StyleBox["Autorun", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0], BoxBaselineShift -> 
+     0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"AutomaticAnimation"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Bookmark Animation"]}],
+  RowBox[{
+   "\"See a prepared animation of this Demonstration by selecting\\n\"", 
+    StyleBox["Animate Bookmarks", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0], BoxBaselineShift -> 
+     0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SearchTermsSection"],
+
+Cell["simple programs", "SearchTerms",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3714780110022745`*^9, 3.3714780156672144`*^9}, {
+   3.3714947450793777`*^9, 3.371494748885648*^9}},
+ CellID->546864822],
+
+Cell["Turing machines", "SearchTerms",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.371478018159854*^9, 3.371478022454401*^9}, {
+   3.371494753032479*^9, 3.37149475717931*^9}},
+ CellID->70289026]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "RelatedLinksSection"],
+
+Cell[TextData[ButtonBox["Turmite",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://mathworld.wolfram.com/Turmite.html"], None}]], "RelatedLinks",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3714786166635876`*^9, 3.3714786406244907`*^9}},
+ CellID->466351474],
+
+Cell[TextData[ButtonBox["History of 2D Turing Machines",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://www.wolframscience.com/nksonline/page-930c-text"], 
+   None}]], "RelatedLinks",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.371494914097799*^9, 3.3714949444878597`*^9}},
+ CellID->203890884]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "AuthorSection"],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Ed Pegg Jr",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Ed+Pegg+Jr"], 
+    None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Ed+Pegg+Jr"]
+}], "Author",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3714780543581834`*^9, 3.3714780604145966`*^9}},
+ CellID->52082847]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1598, 859},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"10.3 for Linux x86 (64-bit) (December 10, 2015)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "Demonstration.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "ResizeImages"->{
+  Cell[78364, 1901, 311, 8, 70, "ControlSuggestions",
+   CellTags->"ResizeImages"]},
+ "RotateAndZoomIn3D"->{
+  Cell[78678, 1911, 678, 16, 70, "ControlSuggestions",
+   CellTags->"RotateAndZoomIn3D"]},
+ "DragLocators"->{
+  Cell[79359, 1929, 340, 11, 70, "ControlSuggestions",
+   CellTags->"DragLocators"]},
+ "CreateAndDeleteLocators"->{
+  Cell[79702, 1942, 637, 15, 70, "ControlSuggestions",
+   CellTags->"CreateAndDeleteLocators"]},
+ "SliderZoom"->{
+  Cell[80342, 1959, 843, 21, 70, "ControlSuggestions",
+   CellTags->"SliderZoom"]},
+ "GamepadControls"->{
+  Cell[81188, 1982, 304, 8, 70, "ControlSuggestions",
+   CellTags->"GamepadControls"]},
+ "AutomaticAnimation"->{
+  Cell[81495, 1992, 1412, 31, 70, "ControlSuggestions",
+   CellTags->"AutomaticAnimation"]},
+ "BookmarkAnimation"->{
+  Cell[82910, 2025, 882, 21, 70, "ControlSuggestions",
+   CellTags->"BookmarkAnimation"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"ResizeImages", 85794, 2120},
+ {"RotateAndZoomIn3D", 85903, 2123},
+ {"DragLocators", 86013, 2126},
+ {"CreateAndDeleteLocators", 86129, 2129},
+ {"SliderZoom", 86243, 2132},
+ {"GamepadControls", 86349, 2135},
+ {"AutomaticAnimation", 86462, 2138},
+ {"BookmarkAnimation", 86579, 2141}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 191, 4, 74, "DemoTitle",
+ CellID->700863240],
+Cell[CellGroupData[{
+Cell[783, 30, 33, 0, 304, "InitializationSection"],
+Cell[819, 32, 784, 25, 47, "Input",
+ CellID->491252009],
+Cell[1606, 59, 7590, 196, 180, "Input",
+ CellID->95406474],
+Cell[9199, 257, 23774, 733, 312, "Input",
+ CellID->958805213]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33010, 995, 29, 0, 242, "ManipulateSection"],
+Cell[CellGroupData[{
+Cell[33064, 999, 1856, 47, 46, "Input",
+ CellID->127727694],
+Cell[34923, 1048, 8455, 161, 515, "Output",
+ CellID->276415291]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43427, 1215, 36, 0, 179, "ManipulateCaptionSection"],
+Cell[43466, 1217, 1076, 17, 58, "ManipulateCaption",
+ CellID->266378341]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44579, 1239, 28, 0, 177, "ThumbnailSection"],
+Cell[44610, 1241, 8391, 160, 517, "Output",
+ CellID->296207183]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53038, 1406, 28, 0, 70, "SnapshotsSection"],
+Cell[53069, 1408, 8394, 160, 70, "Output",
+ CellID->77322170],
+Cell[61466, 1570, 8394, 160, 70, "Output",
+ CellID->92042242],
+Cell[69863, 1732, 8395, 160, 70, "Output",
+ CellID->373763082]
+}, Open  ]],
+Cell[78273, 1895, 26, 0, 70, "DetailsSection"],
+Cell[CellGroupData[{
+Cell[78324, 1899, 37, 0, 70, "ControlSuggestionsSection"],
+Cell[78364, 1901, 311, 8, 70, "ControlSuggestions",
+ CellTags->"ResizeImages"],
+Cell[78678, 1911, 678, 16, 70, "ControlSuggestions",
+ CellTags->"RotateAndZoomIn3D"],
+Cell[79359, 1929, 340, 11, 70, "ControlSuggestions",
+ CellTags->"DragLocators"],
+Cell[79702, 1942, 637, 15, 70, "ControlSuggestions",
+ CellTags->"CreateAndDeleteLocators"],
+Cell[80342, 1959, 843, 21, 70, "ControlSuggestions",
+ CellTags->"SliderZoom"],
+Cell[81188, 1982, 304, 8, 70, "ControlSuggestions",
+ CellTags->"GamepadControls"],
+Cell[81495, 1992, 1412, 31, 70, "ControlSuggestions",
+ CellTags->"AutomaticAnimation"],
+Cell[82910, 2025, 882, 21, 70, "ControlSuggestions",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[83829, 2051, 30, 0, 70, "SearchTermsSection"],
+Cell[83862, 2053, 204, 4, 70, "SearchTerms",
+ CellID->546864822],
+Cell[84069, 2059, 196, 4, 70, "SearchTerms",
+ CellID->70289026]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84302, 2068, 31, 0, 70, "RelatedLinksSection"],
+Cell[84336, 2070, 266, 6, 70, "RelatedLinks",
+ CellID->466351474],
+Cell[84605, 2078, 303, 7, 70, "RelatedLinks",
+ CellID->203890884]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84945, 2090, 25, 0, 70, "AuthorSection"],
+Cell[84973, 2092, 403, 12, 70, "Author",
+ CellID->52082847]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

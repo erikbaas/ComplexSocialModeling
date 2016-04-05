@@ -83,14 +83,17 @@ class SugarscapeModel(Model):
             map_i += 1
 
     def collect_wealth(self, agent):
+        '''Method for datacollector'''
         if isinstance(agent, ScapeAgent):
             return agent.wealth
 
     def collect_metabolism(self, agent):
+        '''Method for datacollector'''
         if isinstance(agent, ScapeAgent):
             return agent.metabolism
 
     def collect_vision(self, agent):
+        '''Method for datacollector'''
         if isinstance(agent, ScapeAgent):
             return agent.vision
 

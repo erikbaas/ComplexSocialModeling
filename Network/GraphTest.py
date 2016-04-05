@@ -152,9 +152,9 @@ def compare_cvp():
 
 def test_scaling():
 
-    vs = [Vertex(str(i)) for i in xrange(1000)]
+    vs = [Vertex(str(i)) for i in xrange(100)]
     # g = Graph(vs, [])
-    g_scale = ScalingNetworkGraph(.1, 100, 900)
+    g_scale = ScalingNetworkGraph(.1, 50, 400)
     print g_scale.avg_deg
 
     # g = [SmallWorldGraph(vs, int(round(g_scale.avg_deg)), 0) for i in xrange(20)]

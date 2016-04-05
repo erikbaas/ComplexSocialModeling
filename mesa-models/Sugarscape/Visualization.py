@@ -7,6 +7,8 @@ from Model import SugarscapeModel
 from Agents import SugarPatch, ScapeAgent
 
 def scape_draw(agent):
+    '''Draw method for CanvasGrid'''
+
     # sugar_dict = ['Yellow', 3:'Gold', 2:'Orange', 1:'DarkOrange', 0:'White'}
     color_list = ['White', 'DarkOrange', 'Orange', 'Gold', 'Yellow']
 
