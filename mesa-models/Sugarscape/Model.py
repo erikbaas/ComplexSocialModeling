@@ -12,32 +12,56 @@ from Agents import SugarPatch, ScapeAgent
 
 
 class SugarscapeModel(Model):
-    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=5, max_vision=10, max_init_sugar=5):
+    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=3, max_vision=10, max_init_sugar=5, min_age=30, max_age=60):
         self.height = height
         self.width = width
         self.init_agents = init_agents
         self.max_metabolism = max_metabolism
         self.max_vision = max_vision
         self.max_init_sugar = max_init_sugar
+        self.min_age = min_age
+        self.max_age = max_age
+        self.replacement_rule = True
+        self.pollution_rule = False
+        self.diffusion_rule = False
+        self.push_rule = False
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)
-        self.running = True
+        self.total_wealth = 1500
+        self.total_pollution = 2500
 
         self.schedule = RandomActivationByType(self)
         self.populate_sugar()
         self.populate_agents()
 
-        self.datacollector = DataCollector({'Agents': (lambda m: m.schedule.get_type_count(ScapeAgent))},
+        self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution)},
                                            {'Wealth': self.collect_wealth,
                                             'Metabolism': self.collect_metabolism,
                                             'Vision': self.collect_vision})
 
+        #Collect data on how spread out the pollution is (concentrated or not)
 
     def step(self):
         ''' Step method run by the visualization module'''
 
+        if self.schedule.time == 20:
+            self.pollution_rule = True
+
+        # if self.schedule.time == 40:
+        #     self.push_rule = True
+
+        if self.schedule.time == 40:
+            self.push_rule = True
+
         self.schedule.step([ScapeAgent, SugarPatch])
         self.datacollector.collect(self)
+        self.total_wealth = 0
+        self.total_pollution = 0
+
+        for agent in self.schedule.agents_by_type[ScapeAgent]:
+            self.total_wealth += agent.wealth
+        for agent in self.schedule.agents_by_type[SugarPatch]:
+            self.total_pollution += agent.pollution
 
     def import_map(self):
         ''' Imports a text file into an array to be used when generating and
@@ -53,6 +77,20 @@ class SugarscapeModel(Model):
 
         return map_list
 
+    def new_agent(self, uid):
+        ''' Place a new agent on the sugarscape in order to replace a death'''
+        free = False
+        while not free:
+            location = random.choice([cell for cell in self.grid.coord_iter()])
+            if len(location[0]) == 1:
+                free = True
+        pos = (location[1], location[2])
+        patch = self.grid.get_cell_list_contents([pos])[0]
+        agent = ScapeAgent(uid, pos, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch)
+
+        self.grid.place_agent(agent, agent.pos)
+        self.schedule.add(agent)
+
     def populate_agents(self):
         ''' Place ScapeAgent's in random unoccupied locations on the grid with random
             sets of parameters
@@ -63,7 +101,8 @@ class SugarscapeModel(Model):
             uid = 'a' + str(i)
             location = random.choice(cells)
             cells.remove(location)
-            agent = ScapeAgent(uid, location, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision))
+            patch = self.grid.get_cell_list_contents([location])[0]
+            agent = ScapeAgent(uid, location, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch)
             self.grid.place_agent(agent, location)
             self.schedule.add(agent)
 
@@ -77,6 +116,7 @@ class SugarscapeModel(Model):
             x = cell[1]
             y = cell[2]
             uid = 's'+str(y)+str(x)
+            # patch = SugarPatch(uid, (x,y), 3)
             patch = SugarPatch(uid, (x,y), self.map[map_i])
             self.grid.place_agent(patch, (x,y))
             self.schedule.add(patch)

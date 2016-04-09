@@ -14,6 +14,8 @@ class SugarPatch(Agent):
         self.sugar = max_sugar
         self.growth_rate = growth_rate
         self.unique_id = unique_id
+        self.pollution = 0
+        self.amenity = max_sugar
 
     def step(self, model):
         ''' Agent step function: regrows sugar if below max '''
@@ -21,32 +23,74 @@ class SugarPatch(Agent):
         if self.sugar < self.max_sugar:
             self.sugar += 1
 
+        # if model.diffusion_rule:
+        #     self.pollution = self.diffuse(model)
+
+        self.amenity = self.sugar/(1+self.pollution)
+
+    def diffuse(self, model):
+        '''Distribute pollution evenly across agent's neighborhood'''
+        flux = 0
+        for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=True, radius=1):
+            if type(cell) == SugarPatch:
+                flux += cell.pollution
+            elif type(cell) == tuple:
+                for obj in cell:
+                    if type(obj) == SugarPatch:
+                        flux += obj.pollution
+
+        return flux/5.0
+
 
 class ScapeAgent(Agent):
     ''' An agent which searches for the richest sugar patches around it, and
         moves to that location, consuming sugar
     '''
-    def __init__(self, unique_id, pos, wealth, metabolism, vision):
+    def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch):
         self.pos = pos
         self.wealth = wealth
         self.metabolism = metabolism
         self.vision = vision
         self.unique_id = unique_id
         self.age = 0
+        self.max_age = max_age
+        self.curr_patch = curr_patch
 
     def step(self, model):
         ''' Agent step function: searches, moves, consumes sugar, checks for
             death condition
         '''
 
-        patch = self.best_location(model)
-        model.grid.move_agent(self, patch.pos)
-        self.wealth -= self.metabolism
-        self.consume(model, patch)
+        best_patch = self.best_location(model)
+        worst_patch = self.worst_location(model)
 
-        if self.wealth <= 0:
-            model.schedule.remove(self)
-            model.grid._remove_agent(self.pos, self)
+        self.wealth -= self.metabolism
+
+        if model.pollution_rule:
+            self.curr_patch.pollution += self.metabolism
+
+        if model.push_rule:
+            worst_patch.pollution += self.curr_patch.pollution
+            self.curr_patch.pollution = 0
+
+
+        model.grid.move_agent(self, best_patch.pos)
+        self.curr_patch = best_patch
+        self.consume(model, best_patch)
+        self.age += 1
+
+
+        if model.replacement_rule:
+            if (self.wealth <= 0) or (self.age == self.max_age):
+                model.schedule.remove(self)
+                model.grid._remove_agent(self.pos, self)
+                model.new_agent(self.unique_id)
+        else:
+            if self.wealth <= 0:
+                model.schedule.remove(self)
+                model.grid._remove_agent(self.pos, self)
+
+
 
     def best_location(self, model):
         ''' Find the wealthiest sugar patch in the agent's neighbourhood,
@@ -57,29 +101,43 @@ class ScapeAgent(Agent):
         for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=True, radius=self.vision):
             free = True
             patch = None
-            if type(cell) is tuple:
-                for obj in cell:
-                    if type(obj) == ScapeAgent:
-                        free = False
-                    if type(obj) == SugarPatch:
-                        patch = obj
-            else:
-                if type(cell) == ScapeAgent:
-                    free = False
-                if type(cell) == SugarPatch:
-                    patch = cell
 
-            if free and (patch != None):
-                options.append(patch)
+            if type(cell) == SugarPatch:
+                options.append(cell)
 
         random.shuffle(options)
-        options_wealth = [patch.sugar for patch in options]
-        maximum = max(options_wealth)
-        best_ind = options_wealth.index(maximum)
+        options_amenity = [patch.amenity for patch in options]
+        maximum = max(options_amenity)
+        best_ind = options_amenity.index(maximum)
 
         return options[best_ind]
 
+    def worst_location(self, model):
+        ''' Find the worst polluted/least amenable location in agent's neighborhood,
+            according to vision attribute
+        '''
+
+        options = []
+        for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=True, radius=self.vision):
+            free = True
+            patch = None
+
+            if type(cell) == SugarPatch:
+                options.append(cell)
+
+        random.shuffle(options)
+        options_metric = [patch.amenity for patch in options]
+        # options_metric = [patch.pollution for patch in options]
+        minimum = min(options_metric)
+        worst_ind = options_metric.index(minimum)
+
+        return options[worst_ind]
+
+
     def consume(self, model, patch):
-        ''' Transfers SugarPatch's contents to agent '''
-        self.wealth += patch.sugar
+        ''' Transfers SugarPatch's contents to agent and pollutes'''
+        gained = patch.sugar
+        self.wealth += gained
         patch.sugar = 0
+        if model.pollution_rule:
+            patch.pollution += gained
