@@ -1,0 +1,19 @@
+#Thoughts on this pollution model:
+
+###With/Out Replacement Rule
+    -Agents clear out niches, have no need to push beyond that, because they can just alternate.
+    -Because they never go into other polluted squares, whole may stays relatively polluted.
+    -When you introduce new agents to random spots, they have incentive to clear out the majority of the squares, and piles actually get pushed out to the badlands
+
+###With/Out Growth-affecting pollution
+    -When pollution affects growth, you have agents entering these pollution-heavy spots once they've fully grown.
+    -In that way, you could hope that the big piles would get pushed out farther to the badlands, instead of staying stuck in the cities.
+    -This also functions as an almost incentive to go and clear out polluted spots. Is there a different way to do this?
+    -The only question is then is the one below.
+###With Agent Pushing to amenity/pollution
+    -When amenity is decided based on pollution, then it doesn't matter.
+    -However, when pollution simply affects growth, amenity only correlates to sugar, so it doesn't make sense to use that. Instead, it makes more sense to push towards pollution-heavy sites.
+
+##Next thoughts:
+    -Agents need to spend 1/2 of wealth to be able to push pollution around.
+    -That gives a nice benefit to the richer ones. Better mimics society.
