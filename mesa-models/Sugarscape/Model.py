@@ -21,14 +21,14 @@ class SugarscapeModel(Model):
         self.max_init_sugar = max_init_sugar
         self.min_age = min_age
         self.max_age = max_age
-        self.replacement_rule = True
+        self.replacement_rule = False
         self.pollution_rule = False
         self.diffusion_rule = False
         self.push_rule = False
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)
         self.total_wealth = 1500
-        self.total_pollution = 2500
+        self.total_pollution = 0
 
         self.schedule = RandomActivationByType(self)
         self.populate_sugar()
@@ -43,18 +43,16 @@ class SugarscapeModel(Model):
 
     def step(self):
         ''' Step method run by the visualization module'''
+        self.schedule.step([ScapeAgent, SugarPatch])
+        self.datacollector.collect(self)
 
         if self.schedule.time == 20:
             self.pollution_rule = True
 
-        # if self.schedule.time == 40:
-        #     self.push_rule = True
-
         if self.schedule.time == 40:
+        #     self.diffusion_rule = True
             self.push_rule = True
 
-        self.schedule.step([ScapeAgent, SugarPatch])
-        self.datacollector.collect(self)
         self.total_wealth = 0
         self.total_pollution = 0
 
@@ -62,6 +60,7 @@ class SugarscapeModel(Model):
             self.total_wealth += agent.wealth
         for agent in self.schedule.agents_by_type[SugarPatch]:
             self.total_pollution += agent.pollution
+
 
     def import_map(self):
         ''' Imports a text file into an array to be used when generating and

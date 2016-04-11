@@ -10,7 +10,6 @@ from Agents import SugarPatch, ScapeAgent
 def scape_draw(agent, model):
     '''Draw method for CanvasGrid'''
 
-    # sugar_dict = ['Yellow', 3:'Gold', 2:'Orange', 1:'DarkOrange', 0:'White'}
     sugar_color = ['White', 'DarkOrange', 'Orange', 'Gold', 'Yellow']
     poll_color = ['White', ]
 
@@ -20,6 +19,17 @@ def scape_draw(agent, model):
     if type(agent) is SugarPatch:
         portrayal = {'Shape':'rect', 'w':1, 'h':1, 'Filled':'true','Layer':0}
         # portrayal['Color'] = sugar_color[agent.sugar]
+        # if agent.sugar >= 4:
+        #     portrayal['Color'] = sugar_color[4]
+        # elif agent.sugar >= 3:
+        #     portrayal['Color'] = sugar_color[3]
+        # elif agent.sugar >= 2:
+        #     portrayal['Color'] = sugar_color[2]
+        # elif agent.sugar >= 1:
+        #     portrayal['Color'] = sugar_color[1]
+        # elif agent.sugar >= 0:
+        #     portrayal['Color'] = sugar_color[0]
+
         if agent.pollution > 80:
             portrayal['Color'] = 'Black'
         elif agent.pollution > 35:
@@ -34,7 +44,8 @@ def scape_draw(agent, model):
             portrayal['Color'] = 'White'
 
     if type(agent) is ScapeAgent:
-        portrayal = {'Shape':'circle', 'r':log(agent.wealth,model.total_wealth), 'Filled':'true', 'Layer':1}
+        portrayal = {'Shape':'circle', 'r':.6, 'Filled':'true', 'Layer':1}
+        # log(round(agent.wealth),round(model.total_wealth))
         if agent.wealth <= 0:
             portrayal['Color'] = 'Red'
         else:

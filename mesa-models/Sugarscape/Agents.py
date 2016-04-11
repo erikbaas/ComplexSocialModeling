@@ -21,12 +21,14 @@ class SugarPatch(Agent):
         ''' Agent step function: regrows sugar if below max '''
 
         if self.sugar < self.max_sugar:
-            self.sugar += 1
+            # self.sugar += 1
+            self.sugar += abs(50 - self.pollution)/50
 
         # if model.diffusion_rule:
-        #     self.pollution = self.diffuse(model)
+            # self.pollution = self.diffuse(model)
 
-        self.amenity = self.sugar/(1+self.pollution)
+        # self.amenity = (10+self.sugar)/(1+self.pollution)
+        self.amenity = self.sugar
 
     def diffuse(self, model):
         '''Distribute pollution evenly across agent's neighborhood'''
