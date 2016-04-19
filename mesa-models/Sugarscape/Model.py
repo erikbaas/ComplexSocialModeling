@@ -21,25 +21,26 @@ class SugarscapeModel(Model):
         self.max_init_sugar = max_init_sugar
         self.min_age = min_age
         self.max_age = max_age
-        self.replacement_rule = False
+
+        self.replacement_rule = True
         self.pollution_rule = False
         self.diffusion_rule = False
         self.push_rule = False
+
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)
-        self.total_wealth = 1500
-        self.total_pollution = 0
-
         self.schedule = RandomActivationByType(self)
-        self.populate_sugar()
-        self.populate_agents()
-
         self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution)},
                                            {'Wealth': self.collect_wealth,
                                             'Metabolism': self.collect_metabolism,
                                             'Vision': self.collect_vision})
 
-        #Collect data on how spread out the pollution is (concentrated or not)
+        self.total_wealth = 1500
+        self.total_pollution = 0
+
+        self.populate_sugar()
+        self.populate_agents()
+
 
     def step(self):
         ''' Step method run by the visualization module'''
@@ -48,18 +49,15 @@ class SugarscapeModel(Model):
 
         if self.schedule.time == 20:
             self.pollution_rule = True
-
-        if self.schedule.time == 40:
-        #     self.diffusion_rule = True
+        if self.schedule.time == 30:
             self.push_rule = True
 
         self.total_wealth = 0
         self.total_pollution = 0
-
         for agent in self.schedule.agents_by_type[ScapeAgent]:
             self.total_wealth += agent.wealth
-        for agent in self.schedule.agents_by_type[SugarPatch]:
-            self.total_pollution += agent.pollution
+        for patch in self.schedule.agents_by_type[SugarPatch]:
+            self.total_pollution += patch.pollution
 
 
     def import_map(self):
@@ -83,6 +81,7 @@ class SugarscapeModel(Model):
             location = random.choice([cell for cell in self.grid.coord_iter()])
             if len(location[0]) == 1:
                 free = True
+
         pos = (location[1], location[2])
         patch = self.grid.get_cell_list_contents([pos])[0]
         agent = ScapeAgent(uid, pos, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch)
@@ -91,7 +90,7 @@ class SugarscapeModel(Model):
         self.schedule.add(agent)
 
     def populate_agents(self):
-        ''' Place ScapeAgent's in random unoccupied locations on the grid with random
+        ''' Place ScapeAgent's in random unoccupied locations on the grid with randomomized
             sets of parameters
         '''
 

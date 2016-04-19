@@ -17,3 +17,7 @@
 ##Next thoughts:
     -Agents need to spend 1/2 of wealth to be able to push pollution around.
     -That gives a nice benefit to the richer ones. Better mimics society.
+
+##In the center, with proper regrowth formula and amenity=sugar, agents need to keep moving and cleaning because other agents throw shit into their territory for a time. Almost always still a dump in center
+
+##The stronger the impact of pollution, the less space gets cleared out

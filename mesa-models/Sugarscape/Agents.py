@@ -3,7 +3,6 @@ from __future__ import division
 import random
 from mesa import Agent
 
-
 class SugarPatch(Agent):
     ''' An agent which does not move, regrows sugar, and transfers sugar
         when a ScapeAgent occupies the same space
@@ -21,17 +20,20 @@ class SugarPatch(Agent):
         ''' Agent step function: regrows sugar if below max '''
 
         if self.sugar < self.max_sugar:
+            # Growth can be affected by pollution or remain constant:
             # self.sugar += 1
-            self.sugar += abs(50 - self.pollution)/50
+            self.sugar += 1.01**(-self.pollution)
 
-        # if model.diffusion_rule:
-            # self.pollution = self.diffuse(model)
+        if model.diffusion_rule:
+            self.pollution = self.diffuse(model)
 
-        # self.amenity = (10+self.sugar)/(1+self.pollution)
+        # If growth is affected by pollution, amenity should be equal to sugar:
         self.amenity = self.sugar
+        # self.amenity = self.sugar/(1+self.pollution)
 
     def diffuse(self, model):
         '''Distribute pollution evenly across agent's neighborhood'''
+
         flux = 0
         for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=True, radius=1):
             if type(cell) == SugarPatch:
@@ -43,11 +45,17 @@ class SugarPatch(Agent):
 
         return flux/5.0
 
+    def add_pollution(self, val):
+        prev = self.pollution
+        self.pollution += val
+        if self.pollution != (prev + val):
+            print('WTF')
 
 class ScapeAgent(Agent):
     ''' An agent which searches for the richest sugar patches around it, and
         moves to that location, consuming sugar
     '''
+
     def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch):
         self.pos = pos
         self.wealth = wealth
@@ -72,9 +80,17 @@ class ScapeAgent(Agent):
             self.curr_patch.pollution += self.metabolism
 
         if model.push_rule:
-            worst_patch.pollution += self.curr_patch.pollution
+            check1 = worst_patch.pollution + self.curr_patch.pollution
+            error = 'Worst: ' + str(worst_patch.pollution) + ' Curr: ' + str(self.curr_patch.pollution)
+
+            worst_patch.add_pollution(self.curr_patch.pollution)
             self.curr_patch.pollution = 0
 
+            check2 = worst_patch.pollution + self.curr_patch.pollution
+
+            if check1 != check2:
+                print(error)
+                print('And Worst: ', worst_patch.pollution, ' Curr: ', self.curr_patch.pollution)
 
         model.grid.move_agent(self, best_patch.pos)
         self.curr_patch = best_patch
@@ -120,7 +136,7 @@ class ScapeAgent(Agent):
         '''
 
         options = []
-        for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=True, radius=self.vision):
+        for cell in model.grid.iter_neighbors(self.pos, moore=False, include_center=False, radius=self.vision):
             free = True
             patch = None
 
