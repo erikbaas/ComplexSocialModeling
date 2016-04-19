@@ -21,3 +21,8 @@
 ##In the center, with proper regrowth formula and amenity=sugar, agents need to keep moving and cleaning because other agents throw shit into their territory for a time. Almost always still a dump in center
 
 ##The stronger the impact of pollution, the less space gets cleared out
+
+##With replacement, pollution increase is linear
+##Without replacement, curves off
+
+##With better agents, do I get better results?

@@ -26,16 +26,19 @@ class SugarscapeModel(Model):
         self.pollution_rule = False
         self.diffusion_rule = False
         self.push_rule = False
+        self.poll_growth_rule = True
+        self.expend_rule = True
 
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)
         self.schedule = RandomActivationByType(self)
-        self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution)},
+        self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution),
+                                            'Wealth': (lambda m: m.total_wealth)},
                                            {'Wealth': self.collect_wealth,
                                             'Metabolism': self.collect_metabolism,
                                             'Vision': self.collect_vision})
 
-        self.total_wealth = 1500
+        self.total_wealth = 0
         self.total_pollution = 0
 
         self.populate_sugar()
@@ -47,8 +50,8 @@ class SugarscapeModel(Model):
         self.schedule.step([ScapeAgent, SugarPatch])
         self.datacollector.collect(self)
 
-        if self.schedule.time == 20:
-            self.pollution_rule = True
+        # if self.schedule.time == 20:
+        #     self.pollution_rule = True
         if self.schedule.time == 30:
             self.push_rule = True
 

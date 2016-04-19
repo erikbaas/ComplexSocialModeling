@@ -13,7 +13,7 @@ class SugarPatch(Agent):
         self.sugar = max_sugar
         self.growth_rate = growth_rate
         self.unique_id = unique_id
-        self.pollution = 0
+        self.pollution = 1
         self.amenity = max_sugar
 
     def step(self, model):
@@ -21,15 +21,20 @@ class SugarPatch(Agent):
 
         if self.sugar < self.max_sugar:
             # Growth can be affected by pollution or remain constant:
-            # self.sugar += 1
-            self.sugar += 1.01**(-self.pollution)
+            if model.poll_growth_rule:
+                self.sugar += 1.01**(-self.pollution)
+            else:
+                self.sugar += 1
+
 
         if model.diffusion_rule:
             self.pollution = self.diffuse(model)
 
         # If growth is affected by pollution, amenity should be equal to sugar:
-        self.amenity = self.sugar
-        # self.amenity = self.sugar/(1+self.pollution)
+        if model.poll_growth_rule:
+            self.amenity = self.sugar
+        else:
+            self.amenity = self.sugar/(1+self.pollution)
 
     def diffuse(self, model):
         '''Distribute pollution evenly across agent's neighborhood'''
@@ -46,10 +51,7 @@ class SugarPatch(Agent):
         return flux/5.0
 
     def add_pollution(self, val):
-        prev = self.pollution
         self.pollution += val
-        if self.pollution != (prev + val):
-            print('WTF')
 
 class ScapeAgent(Agent):
     ''' An agent which searches for the richest sugar patches around it, and
@@ -80,17 +82,22 @@ class ScapeAgent(Agent):
             self.curr_patch.pollution += self.metabolism
 
         if model.push_rule:
-            check1 = worst_patch.pollution + self.curr_patch.pollution
-            error = 'Worst: ' + str(worst_patch.pollution) + ' Curr: ' + str(self.curr_patch.pollution)
+            if model.expend_rule:
+                #Agent can spend half its wealth to move pollution
+                expend = self.wealth/2
 
-            worst_patch.add_pollution(self.curr_patch.pollution)
-            self.curr_patch.pollution = 0
+                if self.curr_patch.pollution >= expend:
+                    self.curr_patch.pollution -= expend
+                    worst_patch.pollution += expend
+                    self.wealth -= expend
+                else:
+                    worst_patch.pollution += self.curr_patch.pollution
+                    self.curr_patch.pollution = 0
+                    self.wealth -= self.curr_patch.pollution
+            else:
+                worst_patch.pollution += self.curr_patch.pollution
+                self.curr_patch.pollution = 0
 
-            check2 = worst_patch.pollution + self.curr_patch.pollution
-
-            if check1 != check2:
-                print(error)
-                print('And Worst: ', worst_patch.pollution, ' Curr: ', self.curr_patch.pollution)
 
         model.grid.move_agent(self, best_patch.pos)
         self.curr_patch = best_patch
@@ -158,4 +165,4 @@ class ScapeAgent(Agent):
         self.wealth += gained
         patch.sugar = 0
         if model.pollution_rule:
-            patch.pollution += gained
+            patch.pollution += .5*gained
