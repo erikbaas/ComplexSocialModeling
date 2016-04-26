@@ -55,6 +55,6 @@ def scape_draw(agent, model):
 
 if __name__=='__main__':
     canvas_element = CanvasGrid(scape_draw, 50, 50, 500, 500)
-    agent_count = ChartModule([{'Label':'Pollution', 'Color':'Yellow'}, {'Label':'Wealth', 'Color':'Blue'}])
+    agent_count = ChartModule([{'Label':'Wealth', 'Color':'Blue'}])
     server = ModularServer(SugarscapeModel, [canvas_element, agent_count], 'Sugarscape')
     server.launch()

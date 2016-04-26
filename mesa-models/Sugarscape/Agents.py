@@ -7,13 +7,13 @@ class SugarPatch(Agent):
     ''' An agent which does not move, regrows sugar, and transfers sugar
         when a ScapeAgent occupies the same space
     '''
-    def __init__(self, unique_id, pos, max_sugar, growth_rate=1):
+    def __init__(self, unique_id, pos, max_sugar, growth_rate=1, init_poll=1):
         self.pos = pos
         self.max_sugar = max_sugar
         self.sugar = max_sugar
         self.growth_rate = growth_rate
         self.unique_id = unique_id
-        self.pollution = 1
+        self.pollution = init_poll
         self.amenity = max_sugar
 
     def step(self, model):
@@ -58,7 +58,7 @@ class ScapeAgent(Agent):
         moves to that location, consuming sugar
     '''
 
-    def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch):
+    def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch, ex_ratio):
         self.pos = pos
         self.wealth = wealth
         self.metabolism = metabolism
@@ -67,6 +67,7 @@ class ScapeAgent(Agent):
         self.age = 0
         self.max_age = max_age
         self.curr_patch = curr_patch
+        self.ex_ratio = ex_ratio
 
     def step(self, model):
         ''' Agent step function: searches, moves, consumes sugar, checks for
@@ -84,7 +85,7 @@ class ScapeAgent(Agent):
         if model.push_rule:
             if model.expend_rule:
                 #Agent can spend half its wealth to move pollution
-                expend = self.wealth/2
+                expend = self.wealth/self.ex_ratio
 
                 if self.curr_patch.pollution >= expend:
                     self.curr_patch.pollution -= expend

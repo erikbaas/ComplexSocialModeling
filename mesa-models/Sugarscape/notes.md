@@ -26,3 +26,16 @@
 ##Without replacement, curves off
 
 ##With better agents, do I get better results?
+
+
+#Sweep
+amount they can expend
+expenditure scaling
+initial pollution
+Agent wealth distribution  correlating with total wealth
+Mobility, who is doing the pushing
+
+#Stabilization
+There is a natural stabilization of wealth because of agent death and replacement
+Stabilization is higher when there is less initial pollution
+Stabilization is higher the less of their wealth agents can spend.
