@@ -12,7 +12,7 @@ from Agents import SugarPatch, ScapeAgent
 
 
 class SugarscapeModel(Model):
-    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=6, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=1, ex_ratio=100):
+    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=6, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=1, ex_ratio=100, poll_growth_rule=True, inheritance_rule=False):
         self.height = height
         self.width = width
         self.init_agents = init_agents
@@ -28,9 +28,9 @@ class SugarscapeModel(Model):
         self.pollution_rule = False
         self.diffusion_rule = False
         self.push_rule = False
-        self.poll_growth_rule = True
+        self.poll_growth_rule = poll_growth_rule
         self.expend_rule = True
-        self.inheritance_rule = False
+        self.inheritance_rule = inheritance_rule
 
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)

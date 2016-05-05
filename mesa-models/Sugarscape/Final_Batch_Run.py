@@ -1,22 +1,19 @@
 
 # coding: utf-8
 
-# In[20]:
+# In[16]:
 
-# get_ipython().magic('matplotlib inline')
 from __future__ import division
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from Model import SugarscapeModel
 from mesa.batchrunner import BatchRunner
 
-sugarscape = SugarscapeModel()
+from time import time
 
 
-# In[23]:
+# In[12]:
 
 def get_avg_pollution(model):
     '''Data collecting method to return total wealth of a model'''
@@ -30,88 +27,87 @@ model_reporters = {"Wealth": get_avg_pollution}
 
 # ### Create all parameter sets
 
-# In[18]:
+# In[13]:
 
 #This model has growth-affecting pollution and no inheritance
 params_growth = {"height": 50,
           "width": 50,
-          "init_agents": np.linspace(100,500,5),
+          "init_agents": range(100,600,100),
           "max_metabolism": 3,
           "max_vision": 10,
           "max_init_sugar": 5,
           "min_age": 30,
           "max_age": 60,
           "init_poll": np.linspace(1,10, 10),
-          "ex_ratio": np.linspace(1,100, 20)}
+          "ex_ratio": np.linspace(1,100, 20),
+          "poll_growth_rule": True,
+          "inheritance_rule": False}
 
 #This model has amenity-affecting pollution and no inheritance
 params_amenity = {"height": 50,
           "width": 50,
-          "init_agents": np.linspace(100,500,5),
+          "init_agents": range(100,600,100),
           "max_metabolism": 3,
           "max_vision": 10,
           "max_init_sugar": 5,
           "min_age": 30,
           "max_age": 60,
-          "init_poll": np.linspace(1,10, 10),
-          "ex_ratio": np.linspace(1,100, 20)}
+          "ex_ratio": np.linspace(1,100, 20),
+          "poll_growth_rule": False,
+          "inheritance_rule": False}
 
 #This model has growth_affecting pollution and inheritance
 params_inh_growth = {"height": 50,
           "width": 50,
-          "init_agents": np.linspace(100,500,5),
+          "init_agents": range(100,600,100),
           "max_metabolism": 3,
           "max_vision": 10,
           "max_init_sugar": 5,
           "min_age": 30,
           "max_age": 60,
           "init_poll": np.linspace(1,10, 10),
-          "ex_ratio": np.linspace(1,100, 20)}
-
+          "ex_ratio": np.linspace(1,100, 20),
+          "poll_growth_rule": True,
+          "inheritance_rule": True}
 
 #This model has amenity_affecting pollution and inheritance
 params_inh_amenity = {"height": 50,
           "width": 50,
-          "init_agents": np.linspace(100,500,5),
+          "init_agents": range(100,600,100),
           "max_metabolism": 3,
           "max_vision": 10,
           "max_init_sugar": 5,
           "min_age": 30,
           "max_age": 60,
           "init_poll": np.linspace(1,10, 10),
-          "ex_ratio": np.linspace(1,100, 20)}
+          "ex_ratio": np.linspace(1,100, 20),
+          "poll_growth_rule": False,
+          "inheritance_rule": True}
 
 
 # ### Create Batch Runs With Specific Rule Sets
 
-# In[19]:
+# In[26]:
 
-sugarscape.poll_growth_rule = True
-sugarscape.inheritance_rule = False
-sweep_growth = BatchRunner(sugarscape,
+sweep_growth = BatchRunner(SugarscapeModel,
                           params_growth,
                           iterations=10,
                           max_steps=300,
                           model_reporters=model_reporters)
 
-sugarscape.poll_growth_rule = False
-sugarscape.inheritance_rule = False
+
 sweep_amenity = BatchRunner(SugarscapeModel,
                             params_amenity,
                             iterations=10,
                             max_steps=300,
                             model_reporters=model_reporters)
 
-sugarscape.poll_growth_rule = True
-sugarscape.inheritance_rule = True
 sweep_inh_growth = BatchRunner(SugarscapeModel,
                           params_inh_growth,
                           iterations=10,
                           max_steps=300,
                           model_reporters=model_reporters)
 
-sugarscape.poll_growth_rule = False
-sugarscape.inheritance_rule = True
 sweep_inh_amenity = BatchRunner(SugarscapeModel,
                           params_inh_amenity,
                           iterations=10,
@@ -121,21 +117,24 @@ sweep_inh_amenity = BatchRunner(SugarscapeModel,
 
 # ### Sweep and store all data
 
-# In[22]:
+# In[30]:
 
-sweep_growth.run_all()
-data_growth = sweep_growth.get_model_vars_dataframe()
-data_growth.to_csv('Data/growth.csv')
+def sweep_store(batchrunner, name):
+    start = time()
+    batchrunner.run_all()
+    data = batchrunner.get_model_vars_dataframe()
+    data.to_csv('Data/' + name + '.csv')
+    end = time()
+    print('Finished sweep: ' + name + str(end-start))
 
-sweep_amenity.run_all()
-data_amenity = sweep_amenity.get_model_vars_dataframe()
-data_amenity.to_csv('Data/amenity.csv')
 
-sweep_inh_growth.run_all()
-data_inh_growth = sweep_inh_growth.get_model_vars_dataframe()
-data_amenity.to_csv('Data/inh_growth.csv')
+sweep_store(sweep_growth, 'growth')
+sweep_store(sweep_amenity, 'amenity')
+sweep_store(sweep_inh_growth, 'inh_growth')
+sweep_store(sweep_inh_amenity, 'inh_amenity')
 
-sweep_inh_amenity.run_all()
-data_inh_amenity = sweep_inh_amenity.get_model_vars_dataframe()
-data_amenity.to_csv('Data/inh_amenity.csv')
+
+# In[ ]:
+
+
 
