@@ -30,6 +30,7 @@ class SugarscapeModel(Model):
         self.push_rule = False
         self.poll_growth_rule = True
         self.expend_rule = True
+        self.inheritance_rule = False
 
         self.map = self.import_map()
         self.grid = MultiGrid(height, width, torus=True)
@@ -69,7 +70,7 @@ class SugarscapeModel(Model):
             placing the sugar Agents into the grid
         '''
 
-        f = open('sugar_map.txt', 'r')
+        f = open('Maps/sugar_map.txt', 'r')
         map_list = []
         for line in f:
             num_list = line.split(' ')
@@ -78,7 +79,7 @@ class SugarscapeModel(Model):
 
         return map_list
 
-    def new_agent(self, uid):
+    def new_agent(self, uid, inheritance):
         ''' Place a new agent on the sugarscape in order to replace a death'''
         free = False
         while not free:
@@ -88,7 +89,13 @@ class SugarscapeModel(Model):
 
         pos = (location[1], location[2])
         patch = self.grid.get_cell_list_contents([pos])[0]
-        agent = ScapeAgent(uid, pos, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio)
+
+        if self.inheritance_rule:
+            wealth = inheritance
+        else:
+            wealth = random.randint(1, self.max_init_sugar)
+
+        agent = ScapeAgent(uid, pos, wealth, random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio)
 
         self.grid.place_agent(agent, agent.pos)
         self.schedule.add(agent)

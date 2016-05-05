@@ -39,3 +39,8 @@ Mobility, who is doing the pushing
 There is a natural stabilization of wealth because of agent death and replacement
 Stabilization is higher when there is less initial pollution
 Stabilization is higher the less of their wealth agents can spend.
+
+#Stepping Out
+To different pollution model.
+Different metric.
+Different ratios

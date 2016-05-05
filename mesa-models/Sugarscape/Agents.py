@@ -110,7 +110,7 @@ class ScapeAgent(Agent):
             if (self.wealth <= 0) or (self.age == self.max_age):
                 model.schedule.remove(self)
                 model.grid._remove_agent(self.pos, self)
-                model.new_agent(self.unique_id)
+                model.new_agent(self.unique_id, self.wealth/2)
         else:
             if self.wealth <= 0:
                 model.schedule.remove(self)
