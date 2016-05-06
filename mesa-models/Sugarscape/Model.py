@@ -12,7 +12,7 @@ from Agents import SugarPatch, ScapeAgent
 
 
 class SugarscapeModel(Model):
-    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=6, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=1, ex_ratio=100, poll_growth_rule=True, inheritance_rule=False):
+    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=6, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=3, ex_ratio=2, ex_mod=1, poll_growth_rule=True, inheritance_rule=True):
         self.height = height
         self.width = width
         self.init_agents = init_agents
@@ -23,6 +23,7 @@ class SugarscapeModel(Model):
         self.min_age = min_age
         self.max_age = max_age
         self.ex_ratio = ex_ratio
+        self.ex_mod = ex_mod
 
         self.replacement_rule = True
         self.pollution_rule = False
@@ -36,7 +37,7 @@ class SugarscapeModel(Model):
         self.grid = MultiGrid(height, width, torus=True)
         self.schedule = RandomActivationByType(self)
         self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution),
-                                            'Wealth': (lambda m: m.total_wealth)},
+                                            'Wealth': (lambda m: m.total_wealth/m.init_agents)},
                                            {'Wealth': self.collect_wealth,
                                             'Metabolism': self.collect_metabolism,
                                             'Vision': self.collect_vision})
@@ -55,8 +56,8 @@ class SugarscapeModel(Model):
 
         # if self.schedule.time == 20:
         #     self.pollution_rule = True
-        # if self.schedule.time == 30:
-        #     self.push_rule = True
+        if self.schedule.time == 30:
+            self.push_rule = True
 
         self.total_wealth = 0
         self.total_pollution = 0
@@ -91,11 +92,14 @@ class SugarscapeModel(Model):
         patch = self.grid.get_cell_list_contents([pos])[0]
 
         if self.inheritance_rule:
-            wealth = inheritance
+            if inheritance == 'rand':
+                wealth = random.randint(1, self.max_init_sugar)
+            else:
+                wealth = inheritance
         else:
             wealth = random.randint(1, self.max_init_sugar)
 
-        agent = ScapeAgent(uid, pos, wealth, random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio)
+        agent = ScapeAgent(uid, pos, wealth, random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio, self.ex_mod)
 
         self.grid.place_agent(agent, agent.pos)
         self.schedule.add(agent)
@@ -111,7 +115,7 @@ class SugarscapeModel(Model):
             location = random.choice(cells)
             cells.remove(location)
             patch = self.grid.get_cell_list_contents([location])[0]
-            agent = ScapeAgent(uid, location, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio)
+            agent = ScapeAgent(uid, location, random.randint(1,self.max_init_sugar), random.randint(1,self.max_metabolism), random.randint(1,self.max_vision), random.randint(self.min_age, self.max_age), patch, self.ex_ratio, self.ex_mod)
             self.grid.place_agent(agent, location)
             self.schedule.add(agent)
 

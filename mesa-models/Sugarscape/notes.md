@@ -44,3 +44,8 @@ Stabilization is higher the less of their wealth agents can spend.
 To different pollution model.
 Different metric.
 Different ratios
+
+
+# Less agents makes it better. Everything is trending towards a libertarian view
+
+# Looks like if we can make it possible for an agent to clean 2*pollution with the resources he used to make them, then it's more efficient for them to actually try and clean it

@@ -34,7 +34,7 @@ class SugarPatch(Agent):
         if model.poll_growth_rule:
             self.amenity = self.sugar
         else:
-            self.amenity = self.sugar/(1+self.pollution)
+            self.amenity = self.sugar/(2.0+self.pollution)
 
     def diffuse(self, model):
         '''Distribute pollution evenly across agent's neighborhood'''
@@ -58,7 +58,7 @@ class ScapeAgent(Agent):
         moves to that location, consuming sugar
     '''
 
-    def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch, ex_ratio):
+    def __init__(self, unique_id, pos, wealth, metabolism, vision, max_age, curr_patch, ex_ratio, ex_mod):
         self.pos = pos
         self.wealth = wealth
         self.metabolism = metabolism
@@ -68,6 +68,7 @@ class ScapeAgent(Agent):
         self.max_age = max_age
         self.curr_patch = curr_patch
         self.ex_ratio = ex_ratio
+        self.ex_mod = ex_mod
 
     def step(self, model):
         ''' Agent step function: searches, moves, consumes sugar, checks for
@@ -77,7 +78,6 @@ class ScapeAgent(Agent):
         best_patch = self.best_location(model)
         worst_patch = self.worst_location(model)
 
-        self.wealth -= self.metabolism
 
         if model.pollution_rule:
             self.curr_patch.pollution += self.metabolism
@@ -85,7 +85,7 @@ class ScapeAgent(Agent):
         if model.push_rule:
             if model.expend_rule:
                 #Agent can spend half its wealth to move pollution
-                expend = self.wealth/self.ex_ratio
+                expend = self.ex_mod*(self.wealth/self.ex_ratio)
 
                 if self.curr_patch.pollution >= expend:
                     self.curr_patch.pollution -= expend
@@ -99,6 +99,7 @@ class ScapeAgent(Agent):
                 worst_patch.pollution += self.curr_patch.pollution
                 self.curr_patch.pollution = 0
 
+        self.wealth -= self.metabolism
 
         model.grid.move_agent(self, best_patch.pos)
         self.curr_patch = best_patch
@@ -107,7 +108,12 @@ class ScapeAgent(Agent):
 
 
         if model.replacement_rule:
-            if (self.wealth <= 0) or (self.age == self.max_age):
+            if self.wealth <= 0:
+                model.schedule.remove(self)
+                model.grid._remove_agent(self.pos, self)
+                model.new_agent(self.unique_id, 'rand')
+
+            elif self.age == self.max_age:
                 model.schedule.remove(self)
                 model.grid._remove_agent(self.pos, self)
                 model.new_agent(self.unique_id, self.wealth/2)
