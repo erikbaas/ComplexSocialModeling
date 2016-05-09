@@ -44,7 +44,7 @@ def scape_draw(agent, model):
             portrayal['Color'] = 'White'
 
     if type(agent) is ScapeAgent:
-        portrayal = {'Shape':'circle', 'r':.6, 'Filled':'true', 'Layer':1}
+        portrayal = {'Shape':'circle', 'r':.7, 'Filled':'true', 'Layer':1}
         # log(round(agent.wealth),round(model.total_wealth))
         if agent.wealth <= 0:
             portrayal['Color'] = 'Red'
@@ -54,7 +54,8 @@ def scape_draw(agent, model):
     return portrayal
 
 if __name__=='__main__':
-    canvas_element = CanvasGrid(scape_draw, 50, 50, 500, 500)
-    agent_count = ChartModule([{'Label':'Wealth', 'Color':'Blue'}])
-    server = ModularServer(SugarscapeModel, [canvas_element, agent_count], 'Sugarscape')
+    canvas_element = CanvasGrid(scape_draw, 50, 50, 800, 800)
+    total_wealth = ChartModule([{'Label':'Wealth', 'Color':'Blue'}])
+    agent_count = ChartModule([{'Label':'Agents', 'Color': 'Blue'}])
+    server = ModularServer(SugarscapeModel, [canvas_element, total_wealth], 'Sugarscape')
     server.launch()

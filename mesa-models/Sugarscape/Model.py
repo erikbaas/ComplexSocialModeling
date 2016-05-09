@@ -12,7 +12,7 @@ from Agents import SugarPatch, ScapeAgent
 
 
 class SugarscapeModel(Model):
-    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=6, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=3, ex_ratio=2, ex_mod=1, poll_growth_rule=True, inheritance_rule=True):
+    def __init__(self, height=50, width=50, init_agents=500, max_metabolism=3, max_vision=10, max_init_sugar=5, min_age=30, max_age=60, init_poll=3, ex_ratio=2, ex_mod=1, poll_growth_rule=True, inheritance_rule=True):
         self.height = height
         self.width = width
         self.init_agents = init_agents
@@ -37,7 +37,8 @@ class SugarscapeModel(Model):
         self.grid = MultiGrid(height, width, torus=True)
         self.schedule = RandomActivationByType(self)
         self.datacollector = DataCollector({'Pollution': (lambda m: m.total_pollution),
-                                            'Wealth': (lambda m: m.total_wealth/m.init_agents)},
+                                            'Wealth': (lambda m: m.total_wealth/m.init_agents),
+                                            'Agents': (lambda m: len(m.schedule.agents_by_type[ScapeAgent]))},
                                            {'Wealth': self.collect_wealth,
                                             'Metabolism': self.collect_metabolism,
                                             'Vision': self.collect_vision})
