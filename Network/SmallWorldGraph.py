@@ -159,6 +159,12 @@ if __name__ == '__main__':
     g = SmallWorldGraph([Vertex(str(i)) for i in xrange(10)], 3, 0)
     print g.clust, g.length
 
+    layout = CircleLayout(g)
+
+    # # draw the graph
+    gw = GraphWorld()
+    gw.show_graph(g, layout)
+    gw.mainloop()
 
 
 
